@@ -16,7 +16,7 @@ def start_chatbot():
 
 def start_django_server():
     print("Starting Django Server...")
-    subprocess.run(["python", "manage.py", "runserver"])
+    subprocess.run(["python", "manage.py", "runserver", '0.0.0.0:8000'])
 
 def start_webhook_server():
     print("Starting Webhooks Server...")

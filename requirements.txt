@@ -1,16 +1,12 @@
-
 Django==3.2.16
 langchain==0.0.340
-
 openai==1.3.2
-
 pyTelegramBotAPI==4.13.0
 python-dotenv==1.0.0
 whisper==1.1.10
 telebot==0.0.5
 ffmpeg==1.4
 flask==3.0.0
-subprocess
 pydub==0.25.1
 soundfile==0.12.1
 speechrecognition==3.10.0
@@ -19,3 +15,4 @@ whitenoise
 environ
 django-environ==0.8.1
 whitenoise==5.3.0
+vk_api

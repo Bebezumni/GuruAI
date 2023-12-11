@@ -17460,3 +17460,43 @@ httpx 2023-12-08 14:33:40,449 - INFO - HTTP Request: POST https://api.openai.com
 salesgpt.logger 2023-12-08 14:33:40,463 - INFO - Running determine_conversation_stage: --- 2.088239908218384 seconds ---
 httpx 2023-12-08 14:33:42,825 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 salesgpt.logger 2023-12-08 14:33:42,829 - INFO - Running step: --- 2.3653876781463623 seconds ---
+TeleBot 2023-12-11 09:38:31,818 - ERROR - Infinity polling: polling exited
+TeleBot 2023-12-11 09:38:31,820 - ERROR - Break infinity polling
+salesgpt.logger 2023-12-11 09:39:54,759 - INFO - Running from_llm: --- 0.0003943443298339844 seconds ---
+salesgpt.logger 2023-12-11 09:39:54,760 - INFO - Running from_llm: --- 0.0002033710479736328 seconds ---
+langchain.text_splitter 2023-12-11 09:39:54,761 - WARNING - Created a chunk of size 687, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:54,762 - WARNING - Created a chunk of size 1210, which is longer than the specified 10
+chromadb.telemetry.product.posthog 2023-12-11 09:39:55,367 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+httpx 2023-12-11 09:39:56,649 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+langchain.text_splitter 2023-12-11 09:39:56,843 - WARNING - Created a chunk of size 237, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:56,843 - WARNING - Created a chunk of size 238, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:56,843 - WARNING - Created a chunk of size 240, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:56,843 - WARNING - Created a chunk of size 239, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:56,844 - WARNING - Created a chunk of size 237, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:39:56,844 - WARNING - Created a chunk of size 222, which is longer than the specified 10
+httpx 2023-12-11 09:39:57,706 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:39:57,975 - INFO - Running from_llm: --- 3.216723680496216 seconds ---
+salesgpt.logger 2023-12-11 09:39:57,976 - INFO - Running seed_agent: --- 2.8848648071289062e-05 seconds ---
+httpx 2023-12-11 09:39:59,509 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:39:59,819 - INFO - Running determine_conversation_stage: --- 1.8429419994354248 seconds ---
+httpx 2023-12-11 09:40:04,410 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:40:04,414 - INFO - Running step: --- 4.594005346298218 seconds ---
+salesgpt.logger 2023-12-11 09:41:13,812 - INFO - Running from_llm: --- 0.0004737377166748047 seconds ---
+salesgpt.logger 2023-12-11 09:41:13,813 - INFO - Running from_llm: --- 0.00013637542724609375 seconds ---
+langchain.text_splitter 2023-12-11 09:41:13,813 - WARNING - Created a chunk of size 687, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:13,813 - WARNING - Created a chunk of size 1210, which is longer than the specified 10
+chromadb.telemetry.product.posthog 2023-12-11 09:41:14,331 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+httpx 2023-12-11 09:41:15,084 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+langchain.text_splitter 2023-12-11 09:41:15,276 - WARNING - Created a chunk of size 237, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:15,276 - WARNING - Created a chunk of size 238, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:15,277 - WARNING - Created a chunk of size 240, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:15,277 - WARNING - Created a chunk of size 239, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:15,277 - WARNING - Created a chunk of size 237, which is longer than the specified 10
+langchain.text_splitter 2023-12-11 09:41:15,277 - WARNING - Created a chunk of size 222, which is longer than the specified 10
+httpx 2023-12-11 09:41:16,146 - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:41:16,450 - INFO - Running from_llm: --- 2.6384623050689697 seconds ---
+salesgpt.logger 2023-12-11 09:41:16,451 - INFO - Running seed_agent: --- 1.8358230590820312e-05 seconds ---
+httpx 2023-12-11 09:41:17,350 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:41:17,357 - INFO - Running determine_conversation_stage: --- 0.9060909748077393 seconds ---
+httpx 2023-12-11 09:41:19,546 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 09:41:19,552 - INFO - Running step: --- 2.194352388381958 seconds ---

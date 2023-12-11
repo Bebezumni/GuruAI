@@ -18,7 +18,7 @@ DEBUG = os.getenv('DEBUG', default=True)
 ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
 
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='127.0.0.1'), '5.35.83.224', '0.0.0.0']
 CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER', default='127.0.0.1')]
 
 # Application definition
