@@ -1,0 +1,18 @@
+42423304: привет
+Assistant: Привет! Как у вас дела? Я звоню от ресторана Miki, чтобы узнать, не хотели бы вы забронировать столик у нас? 
+42423304: 
+Assistant: Hello! How are you today? I hope you're doing well. My name is Miki and I work as a Виртуальный администратор at Ресторан Miki. I'm reaching out to see if you would be interested in making a reservation at our restaurant. We offer delicious European and Greek cuisine. Would you like to book a table? 
+42423304: привет
+42423304: привет
+Assistant: Привет! Как у вас дела? Чем я могу вам помочь? 
+42423304: привет
+Assistant: Привет! Как дела? Я Мики, виртуальный администратор из ресторана Miki. Чем я могу помочь вам сегодня? 
+42423304: фыв
+42423304: asd
+Assistant: Hello! How are you today? Is there anything I can assist you with? 
+42423304: хочу
+Assistant: Здравствуйте! Как у вас дела? Как я могу вам помочь сегодня? 
+42423304: привет
+Assistant: Привет! Как у вас дела? Я звоню от ресторана Miki, чтобы предложить вам забронировать столик. Вы интересовались нашей европейской и греческой кухней? 
+42423304: привет
+Assistant: Привет! Как у вас дела? Чем я могу помочь вам сегодня? 

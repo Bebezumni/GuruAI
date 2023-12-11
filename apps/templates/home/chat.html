@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+
+
+<style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .messenger-list {
+            /* Your existing styles for messenger list */
+        }
+
+        .messages {
+            /* Your existing styles for messages */
+        }
+</style>
+
+
+
+
+{% endblock stylesheets %}
+{% block content %}
+<div class="messenger-list">
+    <h2>Messengers:</h2>
+    <ul>
+        {% for messenger in messengers %}
+            <li>
+                <a href="?messenger={{ messenger.messenger }}" style="color: #E94B29;"><strong>{{ messenger.messenger }}</strong></a>
+                {% if selected_messenger == messenger.messenger %}
+                    <ul>
+                        {% for user in users %}
+                            {% if user.messenger == messenger.messenger %}
+                                <li>
+                                    <a href="?messenger={{ messenger.messenger }}&user={{ user.user_id }}" style="color: #E94B29;">{{ user.user_name }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Display messages for the selected user -->
+<div class="messages">
+    {% if ai_messages or selected_user_messages %}
+        <h3>Messages for {{ selected_user.user_name }}:</h3>
+        <ul>
+            {% for message in all_messages %}
+                <li>
+                    <p>AI Message: {{ message.response_text }}</p>
+                    <p>AI Timestamp: {{ message.timestamp }}</p>
+                </li>
+            {% endfor %}
+            {% for message in selected_user_messages %}
+                <li>
+                    <p>User Message: {{ message.message_text }}</p>
+                    <p>User Timestamp: {{ message.timestamp }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No messages available.</p>
+    {% endif %}
+</div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

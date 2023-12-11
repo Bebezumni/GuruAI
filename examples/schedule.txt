@@ -1,0 +1,116 @@
+Monday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+23:00 - Not Busy
+
+Tuesday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+23:00 - Not Busy
+
+Wednesday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+23:00 - Not Busy
+
+Thursday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+23:00 - Not Busy
+
+Friday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+23:00 - Not Busy
+
+Saturday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy
+
+Sunday
+09:00 - Not Busy
+10:00 - Not Busy
+11:00 - Busy
+12:00 - Busy
+13:00 - Busy
+14:00 - Not Busy
+15:00 - Not Busy
+16:00 - Not Busy
+17:00 - Not Busy
+18:00 - Busy
+19:00 - Busy
+20:00 - Busy
+21:00 - Not Busy
+22:00 - Not Busy

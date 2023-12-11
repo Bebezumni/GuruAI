@@ -1,0 +1,99 @@
+Booking Slots:
+
+Monday:
+09:00 - Free
+10:00 - Booked
+11:00 - Free
+12:00 - Booked
+13:00 - Free
+14:00 - Free
+15:00 - Free
+16:00 - Booked
+17:00 - Free
+18:00 - Free
+19:00 - Booked
+20:00 - Free
+
+Tuesday:
+09:00 - Booked
+10:00 - Free
+11:00 - Free
+12:00 - Free
+13:00 - Free
+14:00 - Booked
+15:00 - Booked
+16:00 - Free
+17:00 - Free
+18:00 - Free
+19:00 - Free
+20:00 - Booked
+
+Wednesday:
+09:00 - Free
+10:00 - Free
+11:00 - Free
+12:00 - Booked
+13:00 - Free
+14:00 - Free
+15:00 - Free
+16:00 - Free
+17:00 - Free
+18:00 - Booked
+19:00 - Free
+20:00 - Free
+
+Thursday:
+09:00 - Free
+10:00 - Booked
+11:00 - Free
+12:00 - Free
+13:00 - Free
+14:00 - Free
+15:00 - Booked
+16:00 - Free
+17:00 - Free
+18:00 - Free
+19:00 - Free
+20:00 - Booked
+
+Friday:
+09:00 - Free
+10:00 - Booked
+11:00 - Free
+12:00 - Booked
+13:00 - Free
+14:00 - Booked
+15:00 - Free
+16:00 - Free
+17:00 - Free
+18:00 - Booked
+19:00 - Free
+20:00 - Free
+
+Saturday:
+09:00 - Free
+10:00 - Free
+11:00 - Free
+12:00 - Free
+13:00 - Booked
+14:00 - Free
+15:00 - Free
+16:00 - Free
+17:00 - Booked
+18:00 - Free
+19:00 - Booked
+20:00 - Free
+
+Sunday:
+09:00 - Free
+10:00 - Booked
+11:00 - Booked
+12:00 - Booked
+13:00 - Booked
+14:00 - Booked
+15:00 - Free
+16:00 - Free
+17:00 - Booked
+18:00 - Free
+19:00 - Booked
+20:00 - Free
