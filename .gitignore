@@ -4,3 +4,4 @@ utils.py
 Accounts
 __pycache__
 tester.py
+output.log
