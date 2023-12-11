@@ -17500,3 +17500,11 @@ httpx 2023-12-11 09:41:17,350 - INFO - HTTP Request: POST https://api.openai.com
 salesgpt.logger 2023-12-11 09:41:17,357 - INFO - Running determine_conversation_stage: --- 0.9060909748077393 seconds ---
 httpx 2023-12-11 09:41:19,546 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 salesgpt.logger 2023-12-11 09:41:19,552 - INFO - Running step: --- 2.194352388381958 seconds ---
+httpx 2023-12-11 10:36:46,920 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 10:36:46,937 - INFO - Running determine_conversation_stage: --- 1.525754451751709 seconds ---
+httpx 2023-12-11 10:36:50,355 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 10:36:50,362 - INFO - Running determine_conversation_stage: --- 0.9069581031799316 seconds ---
+httpx 2023-12-11 10:36:50,994 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 10:36:51,003 - INFO - Running step: --- 4.065317392349243 seconds ---
+httpx 2023-12-11 10:36:52,529 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+salesgpt.logger 2023-12-11 10:36:52,536 - INFO - Running step: --- 2.173532724380493 seconds ---
