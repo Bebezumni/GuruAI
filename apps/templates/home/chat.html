@@ -3,32 +3,22 @@
 {% block title %} Tables {% endblock %}
 
 {% block stylesheets %}
-<style>
-
-    .container {
-        margin-left: 260px;
-        margin-top: 100px;
-    }
-
-    .messenger-list {
-        /* New styles for centering messages */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px; /* Adjust the margin as needed */
-    }
-
-</style>
-
 
 {% endblock stylesheets %}
 {% block content %}
 
-<div class="container">
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
 
     <!-- Display messengers list -->
     <div class="messenger-list">
-        <h2>Messengers:</h2>
+        <div class="card-header">
+            <h2>Мессенджеры:</h2>
+        </div>
+
         <ul>
             {% for messenger in messengers %}
                 <li>
@@ -48,20 +38,27 @@
             {% endfor %}
         </ul>
     </div>
-
+    </div>
+          </div>
+                </div>
     <!-- Display messages for the selected user -->
+
+
     {% if selected_user_messages %}
-    <h3>Messages for {{ selected_user.user_name }}:</h3>
+<div class="row">
+<div class="col-md-8">
+<div class="card">
+        <div class="card-header">
+            <h3>Сообщения пользователя : {{ selected_user.user_name }}:</h3>
+        </div>
     <ul>
         {% for message in selected_user_messages %}
             {% if message.ai_prefix %}
-                <p>AI Prefix: {{ message.ai_prefix }}</p>
-                <p>Message: {{ message.message_text }}</p>
-                <p>Timestamp: {{ message.timestamp }}</p>
+                <p>{{ message.ai_prefix }}: {{ message.message_text }}</p>
+                <p>{{ message.timestamp }}</p>
             {% elif message.user %}
-                <p>User: {{ message.user.user_name }}</p>
-                <p>Message: {{ message.message_text }}</p>
-                <p>Timestamp: {{ message.timestamp }}</p>
+                <p>{{ message.user.user_name }}: {{ message.message_text }}</p>
+                <p>{{ message.timestamp }}</p>
 
             {% endif %}
         {% empty %}
@@ -69,9 +66,12 @@
         {% endfor %}
     </ul>
     {% else %}
-        <p>No messages available.</p>
+        <p></p>
     {% endif %}
-    </div>
+
+</div>
+</div>
+</div>
 </div>
 {% endblock content %}
 

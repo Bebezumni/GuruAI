@@ -6,7 +6,7 @@
         <div class="sidebar-wrapper">
             <div class="logo">
                 <a href="javascript:void(0)" class="simple-text logo-mini">
-                    CT
+                    AI
                 </a>
                 <a href="javascript:void(0)" class="simple-text logo-normal">
                     МЕНЮ
@@ -17,14 +17,6 @@
                     <a href="/">
                         <i class="tim-icons icon-chart-pie-36"></i>
                         <p>Аналитика</p>
-                    </a>
-                </li>
-
-
-                <li class="{% if 'notifications' in segment %} active {% endif %}">
-                    <a href="/notifications.html">
-                        <i class="tim-icons icon-bell-55"></i>
-                        <p>Уведомления</p>
                     </a>
                 </li>
                 <li class="{% if 'user' in segment %} active {% endif %}">
@@ -40,18 +32,12 @@
                     </a>
                 </li>
                 <li class="{% if 'typography' in segment %} active {% endif %}">
-                    <a href="/typography.html">
+                    <a href="/">
                         <i class="tim-icons icon-align-center"></i>
-                        <p>Подключения</p>
+                        <p>Подключения (В РАЗРАБОТКЕ)</p>
                     </a>
                 </li>
                 <li>
-                <li class="{% if 'icons' in segment %} active {% endif %}">
-                    <a href="/icons.html">
-                        <i class="tim-icons icon-atom"></i>
-                        <p>Icons</p>
-                    </a>
-                </li>
                 <li>
                     <a href="{% url 'login' %}">
                         <i class="tim-icons icon-button-power"></i>
