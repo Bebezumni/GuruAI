@@ -10,3 +10,5 @@ def create_user_msg(user, message_text):
 def create_ai_msg(user, response_text):
     AiAnswer.objects.create(user=user, response_text=response_text)
 
+def create_chat_msg(user, message_text, response_text):
+    ChatMessage.objects.create(user=user, message_text=message_text, response_text=response_text)

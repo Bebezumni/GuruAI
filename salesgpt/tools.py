@@ -64,6 +64,5 @@ def get_tools(knowledge_base, schedule):
             description="useful for when you need to set an appointment or search for available time slots in the schedule",
         )
     ]
-
     return tools
 
