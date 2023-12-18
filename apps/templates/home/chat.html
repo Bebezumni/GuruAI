@@ -4,16 +4,10 @@
 
 {% block stylesheets %}
 <style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
 
     .container {
-        text-align: center;
+        margin-left: 260px;
+        margin-top: 100px;
     }
 
     .messenger-list {
@@ -24,13 +18,6 @@
         margin-top: 20px; /* Adjust the margin as needed */
     }
 
-    .messages {
-        /* New styles for centering messages */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px; /* Adjust the margin as needed */
-    }
 </style>
 
 
@@ -61,21 +48,27 @@
     </div>
 
     <!-- Display messages for the selected user -->
-    <div class="messages">
-        {% if all_messages or selected_user_messages %}
-            <h3>Messages for {{ selected_user.user_name }}:</h3>
-            <ul>
-                {% for message in selected_user_messages %}
-                    <li>
-                        <p>User Message: {{ message.message_text }}</p>
-                        <p>AI Answer: {{ message.response_text }}</p>
-                        <p>User Timestamp: {{ message.timestamp }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No messages available.</p>
-        {% endif %}
+    {% if selected_user_messages %}
+    <h3>Messages for {{ selected_user.user_name }}:</h3>
+    <ul>
+        {% for message in selected_user_messages %}
+            {% if message.ai_prefix %}
+                <p>AI Prefix: {{ message.ai_prefix }}</p>
+                <p>Message: {{ message.message_text }}</p>
+                <p>Timestamp: {{ message.timestamp }}</p>
+            {% elif message.user %}
+                <p>User: {{ message.user.user_name }}</p>
+                <p>Message: {{ message.message_text }}</p>
+                <p>Timestamp: {{ message.timestamp }}</p>
+
+            {% endif %}
+        {% empty %}
+            <p>No messages found.</p>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>No messages available.</p>
+    {% endif %}
     </div>
 </div>
 {% endblock content %}

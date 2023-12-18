@@ -7,7 +7,7 @@ import utils
 import os
 from vk_api.longpoll import VkLongPoll, VkEventType
 from sales_agent_manager import SalesAgentManager
-from apps.home.models import ChatMessage, ChatUser
+from apps.home.models import ChatUser, UserMessage, AiAnswer
 from objects_creator import create_user_msg, create_ai_msg
 
 vk_session = vk_api.VkApi(token="vk1.a.5Xd_NDBmW8a2c8hT7mko3m02rU7u_s_LtSDuAHSkVhyp8sJIULuUqE3qkKbJh-KQwjYhR9JAWwx9_Ychesk7L4EnvERmFp9bk31yOlwWjnjNr4YwZ67XgbSxjpgCrBP9D9RzmClKXP6jIgxv6Og9dDwUERaURoIVnjKemWuxpSRM28ILNELD8bQqc9RPs3UZFNaEX6y8NthwAZUMglU_kQ")
@@ -46,5 +46,5 @@ for event in longpool.listen():
             ai_answer = sales_agent.step()
             utils.write_to_history_assistant(id, ai_answer)
             ai_answer = utils.check_dialogue_end_and_print_summary(id, ai_answer, message)
-            create_ai_msg(user, ai_answer)
+            create_ai_msg(user, ai_answer, 'Guru')
             send_msg(id,ai_answer)

@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 *.pyc
 .env
 Accounts
 __pycache__
-=======
-*.pyc
-.env
-Accounts
-__pycache__
->>>>>>> 71e34a6e13ff7676efdd4965dd87add44bcf2250
 output.log
+nohup.out
+db.sqlite3

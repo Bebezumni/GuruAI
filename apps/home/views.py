@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from .models import ChatUser, ChatMessage, UserMessage, AiAnswer
+from .models import ChatUser, UserMessage, AiAnswer
 from django.shortcuts import render
 from operator import attrgetter
 
@@ -23,16 +23,14 @@ def chat_view(request):
 
         if selected_user_id:
             selected_user = ChatUser.objects.get(user_id=selected_user_id)
-
-            # Retrieve all messages for the selected user in the selected messenger
             user_messages = UserMessage.objects.filter(user=selected_user)
             ai_messages = AiAnswer.objects.filter(user=selected_user)
 
             # Combine user and AI messages
             all_messages = list(user_messages) + list(ai_messages)
 
-            # Sort all messages by timestamp
-            all_messages = sorted(all_messages, key=lambda x: x.timestamp)
+            # Sort messages by date
+            all_messages.sort(key=lambda x: x.timestamp)
 
             context = {
                 'messengers': messengers,
@@ -40,7 +38,6 @@ def chat_view(request):
                 'users': users if selected_messenger else [],
                 'selected_user_messages': all_messages if selected_user_id else [],
                 'selected_user': selected_user if selected_user_id else None,
-
             }
 
             return render(request, 'home/chat.html', context)

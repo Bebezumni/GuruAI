@@ -15,11 +15,11 @@ from pathlib import Path
 import django
 from langchain.chat_models import ChatLiteLLM
 django.setup()
-from apps.home.models import ChatMessage, ChatUser
+from apps.home.models import UserMessage, ChatUser, AiAnswer
 import threading
 import queue
 from sales_agent_manager import SalesAgentManager
-from objects_creator import create_ai_msg, create_user_msg, create_chat_msg
+from objects_creator import create_ai_msg, create_user_msg
 openai.api_key = utils.openai_api_key
 from salesgpt.agents import SalesGPT
 GPTbot = telebot.TeleBot(utils.Token)
@@ -52,7 +52,7 @@ def process_messages():
             sales_agent.determine_conversation_stage()
             ai_answer = sales_agent.step()
             print(ai_answer)
-            create_ai_msg(user, ai_answer)
+            create_ai_msg(user, ai_answer, 'Guru')
             utils.write_to_history_assistant(user_id, ai_answer)
             ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)    
             answer = (f'{user_promt}')
@@ -62,7 +62,6 @@ def process_messages():
                 GPTbot.reply_to(message=message, text=ai_answer)
             else:
                 print("Error: ai_answer is empty. Check your message generation logic.")
-            create_chat_msg(user, user_promt, ai_answer)
         elif message.content_type == "voice":
             logger.info('Audio message found')
             file_info = GPTbot.get_file(message.voice.file_id)
@@ -94,6 +93,7 @@ def process_messages():
                 utils.write_to_history_assistant(user_id, ai_answer)
                 print('succ utils')
                 GPTbot.reply_to(message=message, text=ai_answer)
+                create_ai_msg(user, ai_answer, 'Guru')
             except subprocess.CalledProcessError as e:
                 logger.error(f"Error running ffmpeg: {e}")
             finally:

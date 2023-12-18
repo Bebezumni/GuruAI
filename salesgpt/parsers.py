@@ -26,9 +26,7 @@ class SalesConvoOutputParser(AgentOutputParser):
         match = re.search(regex, text)
         if not match:
             print('PARSER DID NOT MATCH')
-            ## TODO - this is not entirely reliable, sometimes results in an error.
             return AgentAction('Thought: Do I need to use a tool? No', f"{self.ai_prefix}:", text)
-            # raise OutputParserException(f"Could not parse LLM output: `{text}`")
         action = match.group(1)
         action_input = match.group(2)
         return AgentAction(action.strip(), action_input.strip(" ").strip('"'), text)
