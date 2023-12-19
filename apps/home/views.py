@@ -11,45 +11,19 @@ from django.urls import reverse
 from .models import ChatUser, UserMessage, AiAnswer
 from django.shortcuts import render
 from operator import attrgetter
-
+from itertools import chain
 @login_required(login_url='/login/')
 def chat_view(request):
-    messengers = ChatUser.objects.values('messenger').distinct()
-    selected_messenger = request.GET.get('messenger')
-    selected_user_messages = []
-    if selected_messenger:
-        users = ChatUser.objects.filter(messenger=selected_messenger)
-        selected_user_id = request.GET.get('user')
-
-        if selected_user_id:
-            selected_user = ChatUser.objects.get(user_id=selected_user_id)
-            user_messages = UserMessage.objects.filter(user=selected_user)
-            ai_messages = AiAnswer.objects.filter(user=selected_user)
-
-            # Combine user and AI messages
-            all_messages = list(user_messages) + list(ai_messages)
-
-            # Sort messages by date
-            all_messages.sort(key=lambda x: x.timestamp)
-
-            context = {
-                'messengers': messengers,
-                'selected_messenger': selected_messenger,
-                'users': users if selected_messenger else [],
-                'selected_user_messages': all_messages if selected_user_id else [],
-                'selected_user': selected_user if selected_user_id else None,
-            }
-
-            return render(request, 'home/chat.html', context)
-
-    context = {
-        'messengers': messengers,
-        'selected_messenger': selected_messenger,
-        'users': users if selected_messenger else [],
-        'selected_user_messages': selected_user_messages,
-    }
-
-    return render(request, 'home/chat.html', context)
+    chats = ChatUser.objects.all()
+    for chat in chats:
+        chat.last_message = UserMessage.objects.filter(user_id=chat.id).latest('timestamp').message_text if UserMessage.objects.filter(user_id=chat.id).exists() else None
+        chat.last_ai_answer = AiAnswer.objects.filter(user_id=chat.id).latest('timestamp').message_text if AiAnswer.objects.filter(user_id=chat.id).exists() else None
+        user_msgs = UserMessage.objects.filter(user_id=chat.id)
+        ai_answrs = AiAnswer.objects.filter(user_id=chat.id)
+        selected_user_messages = list(chain(user_msgs, ai_answrs))
+        selected_user_messages.sort(key=lambda x: x.timestamp, reverse=True)
+        chat.selected_user_messages = selected_user_messages
+    return render(request, 'home/chat.html', {'chats': chats})
 
 @login_required(login_url="/login/")
 def index(request):

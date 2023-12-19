@@ -1,49 +1,48 @@
-
-    <div class="sidebar">
-        <!--
-          Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
-      -->
-        <div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="javascript:void(0)" class="simple-text logo-mini">
-                    AI
-                </a>
-                <a href="javascript:void(0)" class="simple-text logo-normal">
-                    МЕНЮ
-                </a>
-            </div>
-            <ul class="nav">
-                <li class="{% if 'index' in segment %} active {% endif %} ">
-                    <a href="/">
-                        <i class="tim-icons icon-chart-pie-36"></i>
-                        <p>Аналитика</p>
-                    </a>
-                </li>
-                <li class="{% if 'user' in segment %} active {% endif %}">
-                    <a href="/user.html">
-                        <i class="tim-icons icon-single-02"></i>
-                        <p>Профиль компании</p>
-                    </a>
-                </li>
-                <li class="{% if 'tables' in segment %} active {% endif %}">
-                    <a href="chat">
-                        <i class="tim-icons icon-puzzle-10"></i>
-                        <p>AI чаты</p>
-                    </a>
-                </li>
-                <li class="{% if 'typography' in segment %} active {% endif %}">
-                    <a href="/">
-                        <i class="tim-icons icon-align-center"></i>
-                        <p>Подключения (В РАЗРАБОТКЕ)</p>
-                    </a>
-                </li>
-                <li>
-                <li>
-                    <a href="{% url 'login' %}">
-                        <i class="tim-icons icon-button-power"></i>
-                        <p>Logout</p>
-                    </a>
-                </li>
-            </ul>
+<div class="sidebar" >
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
+  -->
+    <div class="sidebar-wrapper" >
+        <div class="logo">
+            <a href="javascript:void(0)" class="simple-text logo-mini">
+                AI
+            </a>
+            <a href="javascript:void(0)" class="simple-text logo-normal">
+                МЕНЮ
+            </a>
         </div>
+        <ul class="nav">
+            <li class="{% if 'index' in segment %} active {% endif %} ">
+                <a href="/">
+                    <i class="tim-icons icon-chart-pie-36"></i>
+                    <p>Аналитика</p>
+                </a>
+            </li>
+            <li class="{% if 'user' in segment %} active {% endif %}">
+                <a href="/user.html">
+                    <i class="tim-icons icon-single-02"></i>
+                    <p>Профиль компании</p>
+                </a>
+            </li>
+            <li class="{% if 'tables' in segment %} active {% endif %}">
+                <a href="chat">
+                    <i class="tim-icons icon-puzzle-10"></i>
+                    <p>AI чаты</p>
+                </a>
+            </li>
+            <li class="{% if 'typography' in segment %} active {% endif %}">
+                <a href="/">
+                    <i class="tim-icons icon-align-center"></i>
+                    <p>Подключения (В РАЗРАБОТКЕ)</p>
+                </a>
+            </li>
+            <li>
+            <li>
+                <a href="{% url 'login' %}">
+                    <i class="tim-icons icon-button-power"></i>
+                    <p>Logout</p>
+                </a>
+            </li>
+        </ul>
     </div>
+</div>

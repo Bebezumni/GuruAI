@@ -3,77 +3,148 @@
 {% block title %} Tables {% endblock %}
 
 {% block stylesheets %}
+<style>
 
+.table-clickable tbody tr {
+  cursor: pointer;
+}
+
+
+</style>
 {% endblock stylesheets %}
 {% block content %}
 
 
 <div class="content">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-
-    <!-- Display messengers list -->
-    <div class="messenger-list">
-        <div class="card-header">
-            <h2>Мессенджеры:</h2>
-        </div>
-
-        <ul>
-            {% for messenger in messengers %}
-                <li>
-                    <a href="?messenger={{ messenger.messenger }}" style="color: #E94B29;"><strong>{{ messenger.messenger }}</strong></a>
-                    {% if selected_messenger == messenger.messenger %}
-                        <ul>
-                            {% for user in users %}
-                                {% if user.messenger == messenger.messenger %}
-                                    <li>
-                                        <a href="?messenger={{ messenger.messenger }}&user={{ user.user_id }}" style="color: #E94B29;">{{ user.user_name }}</a>
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    </div>
-          </div>
-                </div>
-    <!-- Display messages for the selected user -->
 
 
-    {% if selected_user_messages %}
-<div class="row">
-<div class="col-md-8">
-<div class="card">
-        <div class="card-header">
-            <h3>Сообщения пользователя : {{ selected_user.user_name }}:</h3>
-        </div>
-    <ul>
-        {% for message in selected_user_messages %}
-            {% if message.ai_prefix %}
-                <p>{{ message.ai_prefix }}: {{ message.message_text }}</p>
-                <p>{{ message.timestamp }}</p>
-            {% elif message.user %}
-                <p>{{ message.user.user_name }}: {{ message.message_text }}</p>
-                <p>{{ message.timestamp }}</p>
+{% if selected_user %}
+    <h2>{{ selected_user.user_name }}</h2>
+    {% for message in selected_user_messages %}
+    {% if message.ai_prefix %}
+        <p>{{ message.ai_prefix }}: {{ message.message_text }}</p>
+        <p>{{ message.user.messenger }}</p>
+        <p>{{ message.timestamp }}</p>
+    {% elif message.user %}
+        <p>{{ message.user.user_name }}: {{ message.message_text }}</p>
+        <p>{{ message.user.messenger }}</p>
+        <p>{{ message.timestamp }}</p>
 
-            {% endif %}
-        {% empty %}
-            <p>No messages found.</p>
-        {% endfor %}
-    </ul>
-    {% else %}
-        <p></p>
     {% endif %}
+{% empty %}
+    <p>No messages found.</p>
+{% endfor %}
+{% endif %}
+
+
+
+<table class="table table-hover table-clickable">
+    <thead>
+        <tr>
+
+            <th>Имя</th>
+            <th>Мессенджер</th>
+            <th>Первое сообщение</th>
+            <th class="text-right">Последнее сообщение</th>
+            <th class="text-right">Действия</th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        {% for chat in chats %}
+
+        <tr data-toggle="modal" data-target="#dialogModal{{ chat.id }}">
+            <td>{{ chat.user_name }}</td>
+            <td>{{ chat.messenger }}</td>
+            <td>{{ chat.created_at }}</td>
+            <td class="text-right">{{ chat.last_message }}</td>
+            <td class="td-actions text-right">
+
+                <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" href="icons.html">
+                    <i class="tim-icons icon-settings"></i>
+                </button>
+                <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
+                    <i class="tim-icons icon-simple-remove"></i>
+                </button>
+            </td>
+
+        </tr>
+
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<!-- Modal 1 -->
+{% for chat in chats %}
+    <div class="modal fade" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }} в {{ chat.messenger }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+
+
+                      <div class="col-md-4">
+                          <p>ТАБЛИЦА ЮЗЕРА</p>
+                      </div>
+
+
+                      <div class="col-md-4 ms-auto">
+                        {% for message in chat.selected_user_messages %}
+                        {% if message.ai_prefix %}
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
+                                {{ message.ai_prefix }}: {{ message.message_text }}
+                            </p>
+                            <h6><p>{{ message.timestamp }}</p></h6>
+
+                        {% elif message.user %}
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-info">{{ message.user.user_name }}: {{ message.message_text }}</p>
+                            <h6><p>{{ message.timestamp }}</p></h6>
+                        {% endif %}
+                        {% endfor %}
+                      </div>
+
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
 
 </div>
-</div>
-</div>
-</div>
+
+
 {% endblock content %}
 
 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+
+const tableRows = document.querySelectorAll(".table-clickable tbody tr");
+
+for (const tableRow of tableRows) {
+  tableRow.addEventListener("click", function () {
+    const modalId = this.dataset.target;
+    const modal = document.querySelector(modalId);
+    modal.style.display = "block"; // Show the modal
+  });
+}
+</script>
+{% endblock javascripts %}

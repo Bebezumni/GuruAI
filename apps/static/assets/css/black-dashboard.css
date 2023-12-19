@@ -33,7 +33,7 @@
   --gray-dark: #32325d;
   --light: #ced4da;
   --lighter: #e9ecef;
-  --primary: #e14eca;
+  --primary: #F63B13;
   --secondary: #f4f5f7;
   --success: #00f2c3;
   --info: #1d8cf8;
@@ -4927,12 +4927,12 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary {
-  background-color: #e14eca !important; }
+  background-color: #F63B13 !important; }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #d725bb !important; }
+  background-color: #F63B13 !important; }
 
 .bg-secondary {
   background-color: #f4f5f7 !important; }
@@ -11298,7 +11298,7 @@ table.tablesorter thead tr .headerSortDown {
 .sidebar,
 .off-canvas-sidebar {
   background: #F63B13;
-  background: linear-gradient(0deg, #F63B13 0%, #e14eca 100%);
+  background: linear-gradient(0deg, #FE7E62 0%, #F63B13 100%);
   height: calc(100vh - 90px);
   width: 230px;  position: fixed;
   top: 0;
