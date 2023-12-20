@@ -14,29 +14,41 @@
     height: 80vh;
     overflow-y: auto;
 }
-
+.fixed-div {
+    width: 300px; /* Set the desired width */
+    position: fixed;
+    z-index: 1051;
+    background: #fff;
+    box-shadow: 0 5px 20px 4px rgba(0, 0, 0, .1);
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
 .modal-footer--sticky {
-  position: sticky;
-  bottom: 0;
   background-color: inherit;
   z-index: 1055;
 }
 .modal-footer{
     position: sticky;
     height: 10vh;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px;
+    max-width: 805px;
 }
 
-.floatingInputGroup1 {
-    color: black;
-}
+
 .footer-container {
     background-color: #f8f9fa; /* Set the desired background color */
-    padding: 15px;
     width: 100%;              /* Make it full-width */
     margin-left: auto;        /* Center the container horizontally */
     margin-right: auto;       /* Center the container horizontally */
     max-width: 1400px; /* Add padding for spacing */
 }
+
+
+
 </style>
 {% endblock stylesheets %}
 {% block content %}
@@ -97,7 +109,7 @@
                         {% endif %}
                         {% endfor %}
                       </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 fixed-div">
                           <p>ТАБЛИЦА ЮЗЕРА</p>
                         </div>
 </div>
@@ -119,47 +131,7 @@
         </div>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('send-button').addEventListener('click', function () {
 
-        // Get the input value
-        var textMessage = document.getElementById('floatingInputGroup1').value;
-
-        // Get the CSRF token from the cookie
-        var csrftoken = getCookie('csrftoken');
-        var user = document.getElementById('floatingInputGroup1').getAttribute('data-user');
-
-
-        // Now you can use the 'user' variable in your code
-        console.log('User:', user);
-        console.log('Text Message:', textMessage);
-
-
-
-        // Make an AJAX request to the Django view with the CSRF token
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/create_message_from_site/', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Handle the success response if needed
-                console.log('Object created successfully');
-            } else {
-                // Handle the error response if needed
-                console.error('Failed to create object');
-            }
-        };
-        var requestData = 'text_message=' + encodeURIComponent(textMessage) +
-                          '&user=' + encodeURIComponent(user);
-
-        xhr.send(requestData);
-    });
-});
-
-
-</script>
 {% endfor %}
 
 
@@ -202,5 +174,50 @@ function getCookie(name) {
     return cookieValue;
 }
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Add an event listener to each send button
+    var sendButtons = document.querySelectorAll('.send-button');
+    sendButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            // Get the parent modal of the clicked button
+            var modal = button.closest('.modal');
 
+            // Get the input value within the modal
+            var textMessage = modal.querySelector('.form-control').value;
+
+            // Get the CSRF token from the cookie
+            var csrftoken = getCookie('csrftoken');
+
+            // Get the user attribute from the modal
+            var user = modal.querySelector('.form-control').getAttribute('data-user');
+
+            // Now you can use the 'user' variable in your code
+            console.log('User:', user);
+            console.log('Text Message:', textMessage);
+
+            // Make an AJAX request to the Django view with the CSRF token
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/create_message_from_site/', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    // Handle the success response if needed
+                    console.log('Object created successfully');
+                } else {
+                    // Handle the error response if needed
+                    console.error('Failed to create object');
+                }
+            };
+            var requestData = 'text_message=' + encodeURIComponent(textMessage) +
+                              '&user=' + encodeURIComponent(user);
+
+            xhr.send(requestData);
+        });
+    });
+});
+
+
+</script>
 {% endblock javascripts %}
