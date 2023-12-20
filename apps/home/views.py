@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
+
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-
+from main import create_msg_from_site
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,6 +13,10 @@ from .models import ChatUser, UserMessage, AiAnswer
 from django.shortcuts import render
 from operator import attrgetter
 from itertools import chain
+from django.http import JsonResponse
+
+
+
 @login_required(login_url='/login/')
 def chat_view(request):
     chats = ChatUser.objects.all()
@@ -58,3 +63,11 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
+def create_message_from_site(request):
+    text_message = request.POST.get('text_message')
+    user = request.POST.get('user')
+    user_object = ChatUser.objects.get_or_create(user_id=user)
+
+    AiAnswer.objects.create(user=user_object[0], message_text=text_message, ai_prefix='Guru: ')
+    create_msg_from_site(user_object[0].messenger_id, text_message)
+    return JsonResponse({'status': 'success'})

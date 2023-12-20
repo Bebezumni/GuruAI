@@ -33,6 +33,8 @@ message_queue = queue.Queue()
 llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
 sales_agent_manager = SalesAgentManager()
 
+def create_msg_from_site(id, text):
+    GPTbot.send_message(id, text)
 
 def process_messages():
     while True:
@@ -41,7 +43,8 @@ def process_messages():
         print('message started to process')
         user_id = message.from_user.id
         user_name = message.from_user.first_name
-        user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram')
+        user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram', messenger_id=message.chat.id)
+        print(user)
         if message.content_type == "text":
             user_promt = message.text.strip()
             create_user_msg(user, user_promt)

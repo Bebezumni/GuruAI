@@ -13,6 +13,7 @@ class ChatUser(models.Model):
     user_name = models.CharField(max_length=255)
     messenger = models.CharField(max_length=255)
     created_at = models.DateTimeField(default=timezone.now)
+    messenger_id = models.CharField(max_length=255)
     def __str__(self):
         return self.user_name
 

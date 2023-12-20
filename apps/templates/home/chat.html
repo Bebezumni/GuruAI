@@ -1,5 +1,4 @@
 {% extends "layouts/base.html" %}
-
 {% block title %} Tables {% endblock %}
 
 {% block stylesheets %}
@@ -8,40 +7,43 @@
 .table-clickable tbody tr {
   cursor: pointer;
 }
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 80vh;
+    overflow-y: auto;
+}
 
+.modal-footer--sticky {
+  position: sticky;
+  bottom: 0;
+  background-color: inherit;
+  z-index: 1055;
+}
+.modal-footer{
+    position: sticky;
+    height: 10vh;
+}
 
+.floatingInputGroup1 {
+    color: black;
+}
+.footer-container {
+    background-color: #f8f9fa; /* Set the desired background color */
+    padding: 15px;
+    width: 100%;              /* Make it full-width */
+    margin-left: auto;        /* Center the container horizontally */
+    margin-right: auto;       /* Center the container horizontally */
+    max-width: 1400px; /* Add padding for spacing */
+}
 </style>
 {% endblock stylesheets %}
 {% block content %}
-
-
 <div class="content">
-
-
-{% if selected_user %}
-    <h2>{{ selected_user.user_name }}</h2>
-    {% for message in selected_user_messages %}
-    {% if message.ai_prefix %}
-        <p>{{ message.ai_prefix }}: {{ message.message_text }}</p>
-        <p>{{ message.user.messenger }}</p>
-        <p>{{ message.timestamp }}</p>
-    {% elif message.user %}
-        <p>{{ message.user.user_name }}: {{ message.message_text }}</p>
-        <p>{{ message.user.messenger }}</p>
-        <p>{{ message.timestamp }}</p>
-
-    {% endif %}
-{% empty %}
-    <p>No messages found.</p>
-{% endfor %}
-{% endif %}
-
-
-
 <table class="table table-hover table-clickable">
     <thead>
         <tr>
-
             <th>Имя</th>
             <th>Мессенджер</th>
             <th>Первое сообщение</th>
@@ -49,18 +51,14 @@
             <th class="text-right">Действия</th>
         </tr>
     </thead>
-
-
     <tbody>
         {% for chat in chats %}
-
         <tr data-toggle="modal" data-target="#dialogModal{{ chat.id }}">
             <td>{{ chat.user_name }}</td>
             <td>{{ chat.messenger }}</td>
             <td>{{ chat.created_at }}</td>
             <td class="text-right">{{ chat.last_message }}</td>
             <td class="td-actions text-right">
-
                 <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" href="icons.html">
                     <i class="tim-icons icon-settings"></i>
                 </button>
@@ -68,62 +66,100 @@
                     <i class="tim-icons icon-simple-remove"></i>
                 </button>
             </td>
-
         </tr>
-
         {% endfor %}
     </tbody>
-
 </table>
 
-<!-- Modal 1 -->
 {% for chat in chats %}
     <div class="modal fade" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header modal-header--sticky">
                     <h4 class="modal-title" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }} в {{ chat.messenger }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 600px;">
                 <div class="container-fluid">
                     <div class="row">
-
-
-                      <div class="col-md-4">
-                          <p>ТАБЛИЦА ЮЗЕРА</p>
-                      </div>
-
-
-                      <div class="col-md-4 ms-auto">
+                      <div class="col-md-8 ms-auto">
                         {% for message in chat.selected_user_messages %}
                         {% if message.ai_prefix %}
                             <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
                                 {{ message.ai_prefix }}: {{ message.message_text }}
                             </p>
                             <h6><p>{{ message.timestamp }}</p></h6>
-
                         {% elif message.user %}
-                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-info">{{ message.user.user_name }}: {{ message.message_text }}</p>
+                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-warning">{{ message.user.user_name }}: {{ message.message_text }}</p>
                             <h6><p>{{ message.timestamp }}</p></h6>
                         {% endif %}
                         {% endfor %}
                       </div>
-
+                        <div class="col-md-4">
+                          <p>ТАБЛИЦА ЮЗЕРА</p>
+                        </div>
+</div>
+                </div>
+                <div class="modal-footer modal-footer--sticky">
+                    <div class="footer-container">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Текст сообщения..." data-user="{{ chat.user_id }}">
+                        <button type="button" class="btn btn-secondary send-button" id="send-button">
+                            ОТПРАВИТЬ
+                        </button>
+                    </div>
 
                     </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
 
               </div>
             </div>
         </div>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('send-button').addEventListener('click', function () {
+
+        // Get the input value
+        var textMessage = document.getElementById('floatingInputGroup1').value;
+
+        // Get the CSRF token from the cookie
+        var csrftoken = getCookie('csrftoken');
+        var user = document.getElementById('floatingInputGroup1').getAttribute('data-user');
+
+
+        // Now you can use the 'user' variable in your code
+        console.log('User:', user);
+        console.log('Text Message:', textMessage);
+
+
+
+        // Make an AJAX request to the Django view with the CSRF token
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/create_message_from_site/', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Handle the success response if needed
+                console.log('Object created successfully');
+            } else {
+                // Handle the error response if needed
+                console.error('Failed to create object');
+            }
+        };
+        var requestData = 'text_message=' + encodeURIComponent(textMessage) +
+                          '&user=' + encodeURIComponent(user);
+
+        xhr.send(requestData);
+    });
+});
+
+
+</script>
 {% endfor %}
 
 
@@ -147,4 +183,24 @@ for (const tableRow of tableRows) {
   });
 }
 </script>
+
+<script>
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
 {% endblock javascripts %}
