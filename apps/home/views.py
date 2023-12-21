@@ -3,6 +3,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
+from channels.layers import get_channel_layer
 from main import create_msg_from_site
 from django import template
 from django.contrib.auth.decorators import login_required
@@ -14,7 +15,7 @@ from django.shortcuts import render
 from operator import attrgetter
 from itertools import chain
 from django.http import JsonResponse
-
+from asgiref.sync import async_to_sync
 
 
 @login_required(login_url='/login/')
@@ -26,9 +27,21 @@ def chat_view(request):
         user_msgs = UserMessage.objects.filter(user_id=chat.id)
         ai_answrs = AiAnswer.objects.filter(user_id=chat.id)
         selected_user_messages = list(chain(user_msgs, ai_answrs))
-        selected_user_messages.sort(key=lambda x: x.timestamp, reverse=True)
+        selected_user_messages.sort(key=lambda x: x.timestamp, reverse=False)
         chat.selected_user_messages = selected_user_messages
     return render(request, 'home/chat.html', {'chats': chats})
+
+
+def create_message_from_site(request):
+    text_message = request.POST.get('text_message')
+    user = request.POST.get('user')
+    user_object = ChatUser.objects.get_or_create(user_id=user)
+
+    AiAnswer.objects.create(user=user_object[0], message_text=text_message, ai_prefix='Guru: ')
+    create_msg_from_site(user_object[0].messenger_id, text_message)
+
+    # Return user and text_message in the response
+    return JsonResponse({'status': 'success', 'user': user, 'text_message': text_message})
 
 @login_required(login_url="/login/")
 def index(request):
@@ -63,11 +76,3 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
-def create_message_from_site(request):
-    text_message = request.POST.get('text_message')
-    user = request.POST.get('user')
-    user_object = ChatUser.objects.get_or_create(user_id=user)
-
-    AiAnswer.objects.create(user=user_object[0], message_text=text_message, ai_prefix='Guru: ')
-    create_msg_from_site(user_object[0].messenger_id, text_message)
-    return JsonResponse({'status': 'success'})
