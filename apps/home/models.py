@@ -11,9 +11,11 @@ class ChatUser(models.Model):
     # Your existing fields here
     user_id = models.IntegerField()
     user_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     messenger = models.CharField(max_length=255)
     created_at = models.DateTimeField(default=timezone.now)
     messenger_id = models.CharField(max_length=255)
+    profile_photo = models.ImageField(upload_to='photos/', null=True, blank=True)
     def __str__(self):
         return self.user_name
 

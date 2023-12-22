@@ -19,6 +19,18 @@
     color: black !important;
 }
 
+
+.modal-header--sticky {
+    display: flex;
+    align-items: center;
+
+}
+
+.modal-title {
+    margin: 0;
+    /* Remove default margin */
+}
+
 .fixed-div {
     width: 300px; /* Set the desired width */
     position: fixed;
@@ -28,6 +40,7 @@
     top: 0;
     right: 0;
     bottom: 0;
+    padding-top: 50px;
 }
 .modal-footer--sticky {
   background-color: inherit;
@@ -43,7 +56,6 @@
     max-width: 805px;
 }
 
-
 .footer-container {
     background-color: #f8f9fa; /* Set the desired background color */
     width: 100%;              /* Make it full-width */
@@ -52,11 +64,10 @@
     max-width: 1400px; /* Add padding for spacing */
 }
 
-
-
 </style>
 {% endblock stylesheets %}
 {% block content %}
+{% load static %}
 <div class="content">
 <table class="table table-hover table-clickable">
     <thead>
@@ -94,9 +105,6 @@
             <div class="modal-content">
                 <div class="modal-header modal-header--sticky">
                     <h4 class="modal-title" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }} в {{ chat.messenger }}</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body" style="max-height: 600px;">
                 <div class="container-fluid">
@@ -115,7 +123,10 @@
                         {% endfor %}
                       </div>
                         <div class="col-md-4 fixed-div">
-                          <p>ТАБЛИЦА ЮЗЕРА</p>
+                            <img src="{{  ASSETS_ROOT  }}/{{ chat.profile_photo }}" alt="{{ chat.user_name }}'s Photo">
+                            <p>Имя пользователя: {{ chat.user_name }}</p>
+                            <p>ID пользователя в {{ chat.messenger }}: {{ chat.user_id }}</p>
+
                         </div>
 </div>
                 </div>

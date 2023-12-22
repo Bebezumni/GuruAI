@@ -1,11 +1,14 @@
 import dotenv
 from dotenv import dotenv_values
+from django.core.files import File
+from django.core.files.base import ContentFile
 import logging
 config = dotenv_values(".env")
 print(config)
 dotenv.load_dotenv()
 import telebot
 import utils
+from django.conf import settings
 import os
 from openai import OpenAI
 import openai
@@ -32,6 +35,7 @@ logger = logging.getLogger(__name__)
 message_queue = queue.Queue()
 llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
 sales_agent_manager = SalesAgentManager()
+import requests
 
 def create_msg_from_site(id, text):
     GPTbot.send_message(id, text)
@@ -39,12 +43,39 @@ def create_msg_from_site(id, text):
 def process_messages():
     while True:
         message = message_queue.get()
-        GPTbot.send_chat_action(chat_id=message.chat.id, action="typing")
+        chat_id = message.chat.id
+        GPTbot.send_chat_action(chat_id=chat_id, action="typing")
         print('message started to process')
         user_id = message.from_user.id
+        user_profile_photos = GPTbot.get_user_profile_photos(user_id)
+        print(user_profile_photos)
         user_name = message.from_user.first_name
-        user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram', messenger_id=message.chat.id)
-        print(user)
+
+
+        if user_profile_photos.photos:
+            first_photo = user_profile_photos.photos[0][0]
+            file_id = first_photo.file_id
+            file_path = GPTbot.get_file(file_id).file_path
+            photo_url = f'https://api.telegram.org/file/bot{GPTbot.token}/{file_path}'
+
+            user, created = ChatUser.objects.get_or_create(
+                user_name=user_name,
+                user_id=user_id,
+                messenger='Telegram',
+                messenger_id=message.chat.id
+            )
+
+            # Download and save the file using the FileField
+            content = requests.get(photo_url).content
+            user.profile_photo.save(f'file_{user.id}.jpg', ContentFile(content))
+
+            print(f"User's photo downloaded and saved: {user.profile_photo.url}")
+
+        else:
+            user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram',
+                                                           messenger_id=message.chat.id)
+            print('user without photo created or retrieved')
+
         if message.content_type == "text":
             user_promt = message.text.strip()
             create_user_msg(user, user_promt)

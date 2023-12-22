@@ -36,17 +36,22 @@ def create_message_from_site(request):
     text_message = request.POST.get('text_message')
     user = request.POST.get('user')
     user_object = ChatUser.objects.get_or_create(user_id=user)
-
     AiAnswer.objects.create(user=user_object[0], message_text=text_message, ai_prefix='Guru: ')
     create_msg_from_site(user_object[0].messenger_id, text_message)
-
-    # Return user and text_message in the response
     return JsonResponse({'status': 'success', 'user': user, 'text_message': text_message})
+
+
+
+def chart_data(request):
+    def get(self, request, *args, **kwargs):
+        chats = ChatUser.objects.all()
+        len_chats = len(chats)
+        data = len(chats)
+        return JsonResponse(list(data), safe=False)
 
 @login_required(login_url="/login/")
 def index(request):
     context = {'segment': 'index'}
-
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
