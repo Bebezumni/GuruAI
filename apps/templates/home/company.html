@@ -1,0 +1,85 @@
+
+
+
+{% extends "layouts/base.html" %}
+
+{% block title %} User Profile {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="title">Профиль компании</h5>
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-5 pr-md-1">
+                  <div class="form-group">
+                    <label>Название компании</label>
+                    <input type="text" class="form-control" placeholder="Company" value="{{ company.name }}">
+                  </div>
+                </div>
+                <div class="col-md-3 px-md-1">
+                  <div class="form-group">
+                    <label>Имя пользователя</label>
+                    <input type="text" class="form-control" placeholder="Username" value="{{ company.login }}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label>Описание компании</label>
+                    <textarea rows="4" cols="80" class="form-control" placeholder="Here can be your description" value="Mike">{{ company.description }}</textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Инструкции AI</label>
+                    <textarea rows="4" cols="80" class="form-control" value="Mike">{{ company.instruction }}</textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-user">
+          <div class="card-body">
+            <p class="card-text">
+              <div class="author">
+                <div class="block block-one"></div>
+                <div class="block block-two"></div>
+                <div class="block block-three"></div>
+                <div class="block block-four"></div>
+                <a href="javascript:void(0)">
+                  <img class="avatar" src="{{ ASSETS_ROOT }}/img/emilyz.jpg" alt="...">
+                  <h5 class="title">ИМЯ CEO</h5>
+                </a>
+                <p class="description">
+                  Ceo/Co-Founder
+                </p>
+              </div>
+            </p>
+            <div class="card-description">
+              ВДОХНОВЛЯЮЩАЯ ЦИТАТА
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

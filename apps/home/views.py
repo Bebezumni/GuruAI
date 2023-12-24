@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-from .models import ChatUser, UserMessage, AiAnswer
+from .models import ChatUser, UserMessage, AiAnswer, Company
 from django.shortcuts import render
 from operator import attrgetter
 from itertools import chain
@@ -30,6 +30,11 @@ def chat_view(request):
         selected_user_messages.sort(key=lambda x: x.timestamp, reverse=False)
         chat.selected_user_messages = selected_user_messages
     return render(request, 'home/chat.html', {'chats': chats})
+
+def company_view(request):
+    company = Company.objects.first()
+    return render(request, 'home/company.html', {'company': company})
+
 
 
 def create_message_from_site(request):
