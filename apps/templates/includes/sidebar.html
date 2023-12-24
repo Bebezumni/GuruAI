@@ -2,7 +2,7 @@
     <!--
       Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red"
   -->
-    <div class="sidebar-wrapper" >
+    <div class="sidebar-wrapper font-weight-bold" >
         <div class="logo">
             <a href="javascript:void(0)" class="simple-text logo-mini">
                 AI
@@ -14,33 +14,33 @@
         <ul class="nav">
             <li class="{% if 'index' in segment %} active {% endif %} ">
                 <a href="/">
-                    <i class="tim-icons icon-chart-pie-36"></i>
-                    <p>Аналитика</p>
+                    <i class="tim-icons icon-chart-pie-36 "></i>
+                    <b>Аналитика</b>
                 </a>
             </li>
             <li class="{% if 'user' in segment %} active {% endif %}">
                 <a href="/user.html">
                     <i class="tim-icons icon-single-02"></i>
-                    <p>Профиль компании</p>
+                    <b>Профиль компании</b>
                 </a>
             </li>
             <li class="{% if 'tables' in segment %} active {% endif %}">
                 <a href="chat">
                     <i class="tim-icons icon-puzzle-10"></i>
-                    <p>AI чаты</p>
+                    <b>AI чаты</b>
                 </a>
             </li>
             <li class="{% if 'typography' in segment %} active {% endif %}">
                 <a href="/">
                     <i class="tim-icons icon-align-center"></i>
-                    <p>Подключения (В РАЗРАБОТКЕ)</p>
+                    <b>Подключения (В РАЗРАБОТКЕ)</b>
                 </a>
             </li>
             <li>
             <li>
                 <a href="{% url 'login' %}">
                     <i class="tim-icons icon-button-power"></i>
-                    <p>Logout</p>
+                    <b>Logout</b>
                 </a>
             </li>
         </ul>

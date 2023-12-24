@@ -176,7 +176,8 @@ def handle_text(message):
 if __name__ == "__main__":
     try:
         threading.Thread(target=process_messages, daemon=True).start()
+        GPTbot.delete_webhook()
         GPTbot.infinity_polling(skip_pending=True, none_stop=True)
         print('bot polling started')
-    except:
-        print("Lost connection!")
+    except Exception as e:
+        print(f"An error occurred: {e}")

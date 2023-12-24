@@ -4,152 +4,187 @@
 {% block stylesheets %}
 <style>
 
-.table-clickable tbody tr {
-  cursor: pointer;
-}
-.modal-dialog{
-    overflow-y: initial !important
-}
-.modal-body{
-    height: 80vh;
-    overflow-y: auto;
-}
-
-.form-control {
-    color: black !important;
-}
+    .gray_back {
+        background: var(--guru2) !important;
+    }
 
 
-.modal-header--sticky {
-    display: flex;
-    align-items: center;
+    .table-clickable tbody tr {
+        cursor: pointer;
+    }
 
-}
+    .modal-dialog {
+        overflow-y: initial !important
+    }
 
-.modal-title {
-    margin: 0;
-    /* Remove default margin */
-}
 
-.fixed-div {
-    width: 300px; /* Set the desired width */
-    position: fixed;
-    z-index: 1051;
-    background: #fff;
-    box-shadow: 0 5px 20px 4px rgba(0, 0, 0, .1);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding-top: 50px;
-}
-.modal-footer--sticky {
-  background-color: inherit;
-  z-index: 1055;
-}
-.modal-footer{
-    position: sticky;
-    height: 10vh;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 0px;
-    max-width: 805px;
-}
+    .blur-background {
+        backdrop-filter: blur(5px); /* Регулируйте значение, чтобы получить желаемый эффект размытия */
+    }
 
-.footer-container {
-    background-color: #f8f9fa; /* Set the desired background color */
-    width: 100%;              /* Make it full-width */
-    margin-left: auto;        /* Center the container horizontally */
-    margin-right: auto;       /* Center the container horizontally */
-    max-width: 1400px; /* Add padding for spacing */
-}
+    .modal-body {
+        height: 80vh;
+        overflow-y: auto;
+    }
 
+    .form-control {
+        color: black !important;
+    }
+
+
+    .modal-header--sticky {
+        display: flex;
+        align-items: center;
+
+    }
+
+    .modal-title {
+        margin: 0;
+        /* Remove default margin */
+    }
+
+    .fixed-div {
+        width: 300px; /* Set the desired width */
+        position: fixed;
+        z-index: 1051;
+        background: #fff;
+        box-shadow: 0 5px 20px 4px rgba(0, 0, 0, .1);
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .modal-footer--sticky {
+        background-color: inherit;
+        z-index: 1055;
+    }
+
+    .modal-footer {
+        position: sticky;
+        height: 10vh;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 0px;
+        max-width: 805px;
+    }
+
+    .footer-container {
+        background-color: #f8f9fa; /* Set the desired background color */
+        width: 100%; /* Make it full-width */
+        margin-left: auto; /* Center the container horizontally */
+        margin-right: auto; /* Center the container horizontally */
+        max-width: 1400px;
+    }
 </style>
+
+
 {% endblock stylesheets %}
 {% block content %}
 {% load static %}
-<div class="content">
-<table class="table table-hover table-clickable">
-    <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Мессенджер</th>
-            <th>Первое сообщение</th>
-            <th class="text-right">Последнее сообщение</th>
-            <th class="text-right">Действия</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for chat in chats %}
-        <tr data-toggle="modal" data-target="#dialogModal{{ chat.id }}">
-            <td>{{ chat.user_name }}</td>
-            <td>{{ chat.messenger }}</td>
-            <td>{{ chat.created_at }}</td>
-            <td class="text-right">{{ chat.last_message }}</td>
-            <td class="td-actions text-right">
-                <button type="button" rel="tooltip" class="btn btn-success btn-sm btn-icon" href="icons.html">
-                    <i class="tim-icons icon-settings"></i>
-                </button>
-                <button type="button" rel="tooltip" class="btn btn-danger btn-sm btn-icon">
-                    <i class="tim-icons icon-simple-remove"></i>
-                </button>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="content ">
 
-{% for chat in chats %}
-    <div class="modal fade" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog" aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-header--sticky">
-                    <h4 class="modal-title" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }} в {{ chat.messenger }}</h4>
+
+    <div class="bg-guru1 rounded ">
+
+        <table class="table table-hover table-clickable font-weight-bold">
+
+
+            <thead class="bg-info">
+            <tr>
+                <th>Имя</th>
+                <th>Мессенджер</th>
+                <th>Первое сообщение</th>
+                <th class="text-right">Последнее сообщение</th>
+                <th class="text-right">Действия</th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+            {% for chat in chats %}
+            <tr data-toggle="modal" data-target="#dialogModal{{ chat.id }}">
+                <td>{{ chat.user_name }}</td>
+                <td>{{ chat.messenger }}</td>
+                <td>{{ chat.created_at }}</td>
+                <td class="text-right">{{ chat.last_message }}</td>
+                <td class="td-actions text-right">
+                    <button type="button" class="bg-transparent border-0"><img src="{{ASSETS_ROOT}}/img/plus_icon.png">
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    {% for chat in chats %}
+    <div class="modal fade blur-background" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog"
+         aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl " role="document">
+
+            <div class="modal-content bg-guru2 ">
+                <div class="modal-header modal-header--sticky bg-info p-4">
+                    <h4 class="modal-title text-white" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }}
+                        в {{ chat.messenger }}</h4>
                 </div>
-                <div class="modal-body" style="max-height: 600px;">
-                <div class="container-fluid">
-                    <div class="row">
-                      <div class="col-md-8 ms-auto">
-                        {% for message in chat.selected_user_messages %}
-                        {% if message.ai_prefix %}
-                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">
-                                {{ message.ai_prefix }}: {{ message.message_text }}
-                            </p>
-                            <h6><p>{{ message.timestamp }}</p></h6>
-                        {% elif message.user %}
-                            <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-warning">{{ message.user.user_name }}: {{ message.message_text }}</p>
-                            <h6><p>{{ message.timestamp }}</p></h6>
-                        {% endif %}
-                        {% endfor %}
-                      </div>
-                        <div class="col-md-4 fixed-div">
-                            <img src="{{  ASSETS_ROOT  }}/{{ chat.profile_photo }}" alt="{{ chat.user_name }}'s Photo">
-                            <p>Имя пользователя: {{ chat.user_name }}</p>
-                            <p>ID пользователя в {{ chat.messenger }}: {{ chat.user_id }}</p>
+                <div class="modal-body" style="max-height: 620px;">
+                        <div class="row h-100">
+                            <div class="col-md-8 ms-auto d-flex flex-column h-100" style="max-height: 100%">
+                                <div class="d-flex flex-column flex-grow-1 h-100 modal-chat" style="row-gap: 8px; overflow-y: auto;">
+                                    {% for message in chat.selected_user_messages %}
+                                    {% if message.ai_prefix %}
+
+                                    <div class="text-white bg-primary p-2 rounded w-75">
+                                        <div>{{ message.ai_prefix }}: {{ message.message_text }}</div>
+                                        <div class="text-right small">{{ message.timestamp }}</div>
+                                    </div>
+                                    {% elif message.user %}
+                                    <div class="text-white p-2 rounded w-75 align-self-end border border-warning bg-guru1">
+                                        <div>{{ message.user.user_name }}: {{ message.message_text }}</div>
+                                        <div class="text-right small">{{ message.timestamp }}</div>
+                                    </div>
+
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                
+                                <div class="form-floating d-flex bg-transparent mt-4">
+                                    <input type="text" class="form-control bg-dark" id="floatingInputGroup1"
+                                           placeholder="Текст сообщения..." data-user="{{ chat.user_id }}">
+                                    <button type="button" class="border-0 bg-transparent "
+                                            id="send-button">
+                                        <img src="{{ASSETS_ROOT}}/img/send_button.png" height="20px"></img>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4 bg-transparent text-white">
+                                <div class="rounded bg-guru3 h-100 p-2">
+                                    <div class="mx-auto text-center">
+                                        <img src="{{  ASSETS_ROOT  }}/img/profile_photo.jpg" 
+                                             alt="{{ chat.user_name }}'s Photo" height="200px">
+                                    </div>
+                                    <p class="text-white text-center">{{ chat.user_name }}</p>
+                                    <p class="text-white text-center">USER_ID :{{ chat.user_id }}</p>
+                                    <p class="text-white">Имя</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
+                                    <p class="text-white">Фамилия</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
+                                    <p class="text-white">E-mail:</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
+
+                                </div>
+                            </div>
 
                         </div>
-</div>
                 </div>
-                <div class="modal-footer modal-footer--sticky">
-                    <div class="footer-container">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Текст сообщения..." data-user="{{ chat.user_id }}">
-                        <button type="button" class="btn btn-secondary send-button" id="send-button">
-                            ОТПРАВИТЬ
-                        </button>
-                    </div>
-
-                    </div>
-                </div>
-
-              </div>
             </div>
         </div>
     </div>
 
 
-{% endfor %}
-
+    {% endfor %}
 
 
 </div>
@@ -163,157 +198,161 @@
 <script>
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Event listener for modal shown event
-    $('.modal').on('shown.bs.modal', function () {
-        console.log('Modal shown event fired');
-        scrollToBottom();
-    });
-
-    var currentModal = null;
-
-
-    const tableRows = document.querySelectorAll(".table-clickable tbody tr");
-
-    for (const tableRow of tableRows) {
-        tableRow.addEventListener("click", function () {
-            const modalId = this.dataset.target;
-            const modal = document.querySelector(modalId);
-            modal.style.display = "block"; // Show the modal
-            console.log('Opened modal:', modalId);
-            currentModal = modal;
+    document.addEventListener('DOMContentLoaded', function () {
+        // Event listener for modal shown event
+        $('.modal').on('shown.bs.modal', function () {
+            console.log('Modal shown event fired');
+            scrollToBottom();
         });
-    }
 
-    // Add an event listener to each send button
-    var sendButtons = document.querySelectorAll('.send-button');
-    sendButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            // Get the parent modal of the clicked button
-            var modal = button.closest('.modal');
-            console.log('Clicked button inside modal:', modal);
+        var currentModal = null;
 
-            // Get the input value within the modal
-            var textMessage = modal.querySelector('.form-control').value;
-            var ai_prefix = 'Guru'
-            // Get the CSRF token from the cookie
-            var csrftoken = getCookie('csrftoken');
-            console.log('CSRF Token:', csrftoken);
 
-            // Get the user attribute from the modal
-            var user = modal.querySelector('.form-control').getAttribute('data-user');
-            console.log('User:', user);
-            console.log('Text Message:', textMessage);
+        const tableRows = document.querySelectorAll(".table-clickable tbody tr");
 
-            // Make an AJAX request to the Django view with the CSRF token
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/create_message_from_site/', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
-            xhr.onload = function () {
-                console.log('Inside xhr.onload');
-                if (xhr.status === 200) {
-                    // Handle the success response
-                    console.log('Object created successfully');
+        for (const tableRow of tableRows) {
+            tableRow.addEventListener("click", function () {
+                const modalId = this.dataset.target;
+                const modal = document.querySelector(modalId);
+                modal.style.display = "block"; // Show the modal
+                console.log('Opened modal:', modalId);
+                currentModal = modal;
+            });
+        }
 
-                    // Parse the response JSON to get the user and textMessage
-                    var responseData = JSON.parse(xhr.responseText);
-                    var user = responseData.user;
-                    var textMessage = responseData.text_message;
+        // Add an event listener to each send button
+        var sendButtons = document.querySelectorAll('.send-button');
+        sendButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Get the parent modal of the clicked button
+                var modal = button.closest('.modal');
+                console.log('Clicked button inside modal:', modal);
 
-                    clearTextInput();
-                    // Update the chat messages in the current modal
-                    updateModalContent(currentModal, `${ai_prefix}: ${textMessage}`);
-                    scrollToBottom();
-                } else {
-                    // Handle the error response if needed
-                    console.error('Failed to create object');
-                }
-            };
-            var requestData = 'text_message=' + encodeURIComponent(textMessage) +
-                '&user=' + encodeURIComponent(user);
+                // Get the input value within the modal
+                var textMessage = modal.querySelector('.form-control').value;
+                var ai_prefix = 'Guru'
+                // Get the CSRF token from the cookie
+                var csrftoken = getCookie('csrftoken');
+                console.log('CSRF Token:', csrftoken);
 
-            xhr.send(requestData);
+                // Get the user attribute from the modal
+                var user = modal.querySelector('.form-control').getAttribute('data-user');
+                console.log('User:', user);
+                console.log('Text Message:', textMessage);
+
+                // Make an AJAX request to the Django view with the CSRF token
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/create_message_from_site/', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+                xhr.onload = function () {
+                    console.log('Inside xhr.onload');
+                    if (xhr.status === 200) {
+                        // Handle the success response
+                        console.log('Object created successfully');
+
+                        // Parse the response JSON to get the user and textMessage
+                        var responseData = JSON.parse(xhr.responseText);
+                        var user = responseData.user;
+                        var textMessage = responseData.text_message;
+
+                        clearTextInput();
+                        // Update the chat messages in the current modal
+                        updateModalContent(currentModal, `${ai_prefix}: ${textMessage}`);
+                        scrollToBottom();
+                    } else {
+                        // Handle the error response if needed
+                        console.error('Failed to create object');
+                    }
+                };
+                var requestData = 'text_message=' + encodeURIComponent(textMessage) +
+                    '&user=' + encodeURIComponent(user);
+
+                xhr.send(requestData);
+            });
         });
-    });
 
-    // Update the modal content with the received message
-    function updateModalContent(modal, message) {
-        if (modal) {
-            var messageContainer = modal.querySelector('.modal-body .container-fluid .col-md-8');
-            console.log('Message container:', messageContainer);
+        // Update the modal content with the received message
+        function updateModalContent(modal, message) {
+            if (modal) {
+                var messageContainer = modal.querySelector('.modal-body .container-fluid .col-md-8');
+                console.log('Message container:', messageContainer);
 
-            if (messageContainer) {
-                // Get the existing HTML content
-                var existingContent = messageContainer.innerHTML;
+                if (messageContainer) {
+                    // Get the existing HTML content
+                    var existingContent = messageContainer.innerHTML;
 
-                // Create a new message element
-                var newMessageElement = document.createElement('div');
-                newMessageElement.innerHTML = `
-                    <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${message}</p>
-                    <h6><p>${new Date().toLocaleString()}</p></h6>
+                    // Create a new message element
+                    var newMessageElement = document.createElement('div');
+                    newMessageElement.innerHTML = `
+                    <div class="text-white bg-primary p-2 rounded w-75">
+                        <div>${message}</div>
+                        <div class="text-right small">${new Date().toLocaleString()}</div>
+                    </div>
                 `;
 
-                // Append the new message to the existing content
-                var updatedContent = existingContent + newMessageElement.innerHTML;
+                    // Append the new message to the existing content
+                    var updatedContent = existingContent + newMessageElement.innerHTML;
 
-                // Set the updated HTML content of the message container
-                messageContainer.innerHTML = updatedContent;
-                console.log('Updated modal content:', updatedContent);
+                    // Set the updated HTML content of the message container
+                    messageContainer.innerHTML = updatedContent;
+                    console.log('Updated modal content:', updatedContent);
+                } else {
+                    console.error('Message container not found in modal');
+                }
             } else {
-                console.error('Message container not found in modal');
-            }
-        } else {
-            console.error('No modal found');
-        }
-    }
-    function scrollToBottom() {
-        if (currentModal) {
-            var modalBody = currentModal.querySelector('.modal-body');
-            if (modalBody) {
-                modalBody.scrollTop = modalBody.scrollHeight;
+                console.error('No modal found');
             }
         }
-    }
 
-
-
-    function clearTextInput() {
-        if (currentModal) {
-            var textInput = currentModal.querySelector('.form-control');
-            if (textInput) {
-                textInput.value = '';
-            }
-        }
-    }
-    // Get the CSRF token from the cookie
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+        function scrollToBottom() {
+            if (currentModal) {
+                var modalBody = currentModal.querySelector('.modal-chat');
+                if (modalBody) {
+                    modalBody.scrollTop = modalBody.scrollHeight;
                 }
             }
         }
-        return cookieValue;
-    }
-    var textInput = document.querySelectorAll('.form-control');
-    textInput.forEach(function (input) {
-        input.addEventListener('keydown', function (event) {
-            // Check if the pressed key is Enter (key code 13)
-            if (event.key === 'Enter') {
-                // Simulate a click on the "Отправить" button
-                var sendButton = input.closest('.modal').querySelector('.send-button');
-                sendButton.click();
+
+
+        function clearTextInput() {
+            if (currentModal) {
+                var textInput = currentModal.querySelector('.form-control');
+                if (textInput) {
+                    textInput.value = '';
+                }
             }
+        }
+
+        // Get the CSRF token from the cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        var textInput = document.querySelectorAll('.form-control');
+        textInput.forEach(function (input) {
+            input.addEventListener('keydown', function (event) {
+                // Check if the pressed key is Enter (key code 13)
+                if (event.key === 'Enter') {
+                    // Simulate a click on the "Отправить" button
+                    var sendButton = input.closest('.modal').querySelector('.send-button');
+                    sendButton.click();
+                }
+            });
         });
     });
-});
 
 </script>
 {% endblock javascripts %}

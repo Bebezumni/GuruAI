@@ -16,3 +16,5 @@ environ
 django-environ==0.8.1
 whitenoise==5.3.0
 vk_api
+channels
+pillow

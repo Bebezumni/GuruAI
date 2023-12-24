@@ -29,3 +29,10 @@ class AiAnswer(models.Model):
     ai_prefix = models.TextField()
     message_text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=255)
+    login = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    instruction = models.CharField(max_length=3000)

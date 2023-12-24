@@ -16,8 +16,6 @@ longpool = VkLongPoll(vk_session)
 sales_agent_manager = SalesAgentManager()
 ACCOUNTS_DIR = "Accounts"
 RECORDINGS_DIR = "recordings"
-
-
 def send_msg(id,text):
     vk_session.method("messages.send", {"user_id":id, "message":text,"random_id":0})
 
