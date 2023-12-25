@@ -46,6 +46,17 @@ def create_message_from_site(request):
     create_msg_from_site(user_object[0].messenger_id, text_message)
     return JsonResponse({'status': 'success', 'user': user, 'text_message': text_message})
 
+@login_required(login_url='/login/')
+def save_profile_info(request):
+    user_name = request.POST.get('user_name')
+    last_name = request.POST.get('last_name')
+    e_mail = request.POST.get('e_mail')
+    phone_number = request.POST.get('phone_number')
+    user = request.POST.get('user')
+    user_object = ChatUser.objects.get_or_create(user_id=user)
+    ChatUser.objects.save(user=user_object, user_name=user, last_name=last_name, e_mail=e_mail, phone_number=phone_number)
+
+    return JsonResponse({'status': 'success', 'user': user})
 
 @login_required(login_url='/login/')
 def chart_data(request):

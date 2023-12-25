@@ -16,6 +16,8 @@ class ChatUser(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     messenger_id = models.CharField(max_length=255)
     profile_photo = models.ImageField(upload_to='photos/', null=True, blank=True)
+    phone_number = models.IntegerField()
+    e_mail = models.CharField(max_length=255)
     def __str__(self):
         return self.user_name
 

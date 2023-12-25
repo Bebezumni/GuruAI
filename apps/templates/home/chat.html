@@ -119,69 +119,77 @@
     </div>
 
 
-    {% for chat in chats %}
-    <div class="modal fade blur-background" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog"
-         aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
-        <div class="modal-dialog modal-xl " role="document">
+{% for chat in chats %}
+<div class="modal fade blur-background" id="dialogModal{{ chat.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="dialogModalLabel{{ chat.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-xl " role="document">
 
-            <div class="modal-content bg-guru2 ">
-                <div class="modal-header modal-header--sticky bg-info p-4">
-                    <h4 class="modal-title text-white" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }}
-                        в {{ chat.messenger }}</h4>
-                </div>
-                <div class="modal-body" style="max-height: 620px;">
-                        <div class="row h-100">
-                            <div class="col-md-8 ms-auto d-flex flex-column h-100" style="max-height: 100%">
-                                <div class="d-flex flex-column flex-grow-1 h-100 modal-chat" style="row-gap: 8px; overflow-y: auto;">
-                                    {% for message in chat.selected_user_messages %}
-                                    {% if message.ai_prefix %}
+        <div class="modal-content bg-guru2 ">
+            <div class="modal-header modal-header--sticky bg-info p-4">
+                <h4 class="modal-title text-white" id="dialogModalLabel{{ chat.id }}">Диалог с {{ chat.user_name }}
+                    в {{ chat.messenger }}</h4>
+            </div>
+            <div class="modal-body" style="max-height: 620px;">
+                    <div class="row h-100">
+                        <div class="col-md-8 ms-auto d-flex flex-column h-100" style="max-height: 100%">
+                            <div class="d-flex flex-column flex-grow-1 h-100 modal-chat" style="row-gap: 8px; overflow-y: auto;">
+                                {% for message in chat.selected_user_messages %}
+                                {% if message.ai_prefix %}
 
-                                    <div class="text-white bg-primary p-2 rounded w-75">
-                                        <div>{{ message.ai_prefix }}: {{ message.message_text }}</div>
-                                        <div class="text-right small">{{ message.timestamp }}</div>
-                                    </div>
-                                    {% elif message.user %}
-                                    <div class="text-white p-2 rounded w-75 align-self-end border border-warning bg-guru1">
-                                        <div>{{ message.user.user_name }}: {{ message.message_text }}</div>
-                                        <div class="text-right small">{{ message.timestamp }}</div>
-                                    </div>
-
-                                    {% endif %}
-                                    {% endfor %}
+                                <div class="text-white bg-primary p-2 rounded w-75">
+                                    <div>{{ message.ai_prefix }}: {{ message.message_text }}</div>
+                                    <div class="text-right small">{{ message.timestamp }}</div>
                                 </div>
-                                
-                                <div class="form-floating d-flex bg-transparent mt-4">
-                                    <input type="text" class="form-control bg-dark" id="floatingInputGroup1"
-                                           placeholder="Текст сообщения..." data-user="{{ chat.user_id }}">
-                                    <button type="button" class="border-0 bg-transparent "
-                                            id="send-button">
-                                        <img src="{{ASSETS_ROOT}}/img/send_button.png" height="20px"></img>
-                                    </button>
+                                {% elif message.user %}
+                                <div class="text-white p-2 rounded w-75 align-self-end border border-warning bg-guru1">
+                                    <div>{{ message.user.user_name }}: {{ message.message_text }}</div>
+                                    <div class="text-right small">{{ message.timestamp }}</div>
                                 </div>
+
+                                {% endif %}
+                                {% endfor %}
                             </div>
-                            <div class="col-md-4 bg-transparent text-white">
-                                <div class="rounded bg-guru3 h-100 p-2">
-                                    <div class="mx-auto text-center">
-                                        <img src="{{  ASSETS_ROOT  }}/img/profile_photo.jpg" 
-                                             alt="{{ chat.user_name }}'s Photo" height="200px">
-                                    </div>
+
+                            <div class="form-floating d-flex bg-transparent mt-4">
+                                <input type="text" class="form-control bg-dark" id="floatingInputGroup1"
+                                       placeholder="Текст сообщения..." data-user="{{ chat.user_id }}">
+                                <button type="button" class="border-0 bg-transparent send-button"
+                                        id="send-button">
+                                    <img src="{{ASSETS_ROOT}}/img/send_button.png" height="20px"></img>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 bg-transparent text-white">
+                            <div class="rounded bg-guru3 h-100 p-2">
+                                <div class="mx-auto text-center">
+                                    <img src="{{  ASSETS_ROOT  }}/img/profile_photo.jpg"
+                                         alt="{{ chat.user_name }}'s Photo" height="200px">
+                                </div>
+                                <div class="px-4">
                                     <p class="text-white text-center">{{ chat.user_name }}</p>
                                     <p class="text-white text-center">USER_ID :{{ chat.user_id }}</p>
-                                    <p class="text-white">Имя</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
-                                    <p class="text-white">Фамилия</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
+                                    <p class="text-white">Имя:</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.user_name }}"></input>
+                                    <p class="text-white">Фамилия:</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.last_name }}"></input>
                                     <p class="text-white">E-mail:</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" ></input>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.e_mail }}"></input>
+                                    <p class="text-white">Номер телефона:</p>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.phone_number }}"></input>
 
                                 </div>
+                                <button id="saveButton" class="text-center ml-4 mt-2">Сохранить</button>
+
+
                             </div>
 
                         </div>
-                </div>
+
+                    </div>
             </div>
         </div>
     </div>
+</div>
 
 
     {% endfor %}
@@ -196,20 +204,14 @@
 {% block javascripts %}
 
 <script>
-
-
     document.addEventListener('DOMContentLoaded', function () {
         // Event listener for modal shown event
         $('.modal').on('shown.bs.modal', function () {
             console.log('Modal shown event fired');
             scrollToBottom();
         });
-
         var currentModal = null;
-
-
         const tableRows = document.querySelectorAll(".table-clickable tbody tr");
-
         for (const tableRow of tableRows) {
             tableRow.addEventListener("click", function () {
                 const modalId = this.dataset.target;
@@ -219,28 +221,19 @@
                 currentModal = modal;
             });
         }
-
-        // Add an event listener to each send button
         var sendButtons = document.querySelectorAll('.send-button');
         sendButtons.forEach(function (button) {
             button.addEventListener('click', function () {
                 // Get the parent modal of the clicked button
                 var modal = button.closest('.modal');
                 console.log('Clicked button inside modal:', modal);
-
-                // Get the input value within the modal
                 var textMessage = modal.querySelector('.form-control').value;
                 var ai_prefix = 'Guru'
-                // Get the CSRF token from the cookie
                 var csrftoken = getCookie('csrftoken');
                 console.log('CSRF Token:', csrftoken);
-
-                // Get the user attribute from the modal
                 var user = modal.querySelector('.form-control').getAttribute('data-user');
                 console.log('User:', user);
                 console.log('Text Message:', textMessage);
-
-                // Make an AJAX request to the Django view with the CSRF token
                 var xhr = new XMLHttpRequest();
                 xhr.open('POST', '/create_message_from_site/', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');

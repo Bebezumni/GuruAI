@@ -358,9 +358,9 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
     var data = {
-      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      labels: ['ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'],
       datasets: [{
-        label: "Data",
+        label: "База лидов",
         fill: true,
         backgroundColor: gradientStroke,
         borderColor: '#d048b6',
@@ -394,9 +394,9 @@ demo = {
     gradientStroke.addColorStop(0, 'rgba(66,134,121,0)'); //green colors
 
     var data = {
-      labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV'],
+      labels: ['ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ'],
       datasets: [{
-        label: "My First dataset",
+        label: "База чатов",
         fill: true,
         backgroundColor: gradientStroke,
         borderColor: '#00d6b4',
