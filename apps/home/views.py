@@ -52,11 +52,17 @@ def save_profile_info(request):
     last_name = request.POST.get('last_name')
     e_mail = request.POST.get('e_mail')
     phone_number = request.POST.get('phone_number')
-    user = request.POST.get('user')
-    user_object = ChatUser.objects.get_or_create(user_id=user)
-    ChatUser.objects.save(user=user_object, user_name=user, last_name=last_name, e_mail=e_mail, phone_number=phone_number)
-
-    return JsonResponse({'status': 'success', 'user': user})
+    user_id = request.POST.get('user')
+    # Using get_or_create with the appropriate fields to retrieve or create the ChatUser instance
+    user_object, created = ChatUser.objects.get_or_create(user_id=user_id)
+    # Update the user attributes
+    user_object.user_name = user_name
+    user_object.last_name = last_name
+    user_object.e_mail = e_mail
+    user_object.phone_number = phone_number
+    # Save the changes
+    user_object.save()
+    return JsonResponse({'status': 'success', 'user': user, 'e_mail': e_mail, 'phone_number': phone_number, 'last_name': last_name, 'user_name':user_name})
 
 @login_required(login_url='/login/')
 def chart_data(request):

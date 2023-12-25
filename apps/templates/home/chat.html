@@ -169,16 +169,16 @@
                                     <p class="text-white text-center">{{ chat.user_name }}</p>
                                     <p class="text-white text-center">USER_ID :{{ chat.user_id }}</p>
                                     <p class="text-white">Имя:</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.user_name }}"></input>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0 form-name" value="{{ chat.user_name }}"></input>
                                     <p class="text-white">Фамилия:</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.last_name }}"></input>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0 form-last-name" value="{{ chat.last_name }}"></input>
                                     <p class="text-white">E-mail:</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.e_mail }}"></input>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0 form-email" value="{{ chat.e_mail }}"></input>
                                     <p class="text-white">Номер телефона:</p>
-                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0" value="{{ chat.phone_number }}"></input>
+                                    <input class="text-white bg-transparent border-left-0 border-right-0 border-top-0 form-number" value="{{ chat.phone_number }}"></input>
 
                                 </div>
-                                <button id="saveButton" class="text-center ml-4 mt-2">Сохранить</button>
+                                <button id="saveButton" class="text-center ml-5 mt-2 bg-transparent border-0 saveButton"><img src="{{ ASSETS_ROOT }}/img/save_button.png"></img></button>
 
 
                             </div>
@@ -260,10 +260,66 @@
                 };
                 var requestData = 'text_message=' + encodeURIComponent(textMessage) +
                     '&user=' + encodeURIComponent(user);
-
                 xhr.send(requestData);
             });
         });
+
+        var saveButtons = document.querySelectorAll('.saveButton');
+            saveButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    // Get the parent modal of the clicked button
+                    var modal = button.closest('.modal');
+                    console.log('Clicked button inside modal:', modal);
+
+                    // Get the input values within the modal
+                    var userName = modal.querySelector('.form-name').value;
+                    var lastName = modal.querySelector('.form-last-name').value;
+                    var email = modal.querySelector('.form-email').value;
+                    var phoneNumber = modal.querySelector('.form-number').value;
+
+                    // Get the user attribute from the modal
+                    var user = modal.querySelector('.form-control').getAttribute('data-user');
+                    console.log('User:', user);
+
+                    // Get the CSRF token from the cookie
+                    var csrftoken = getCookie('csrftoken');
+                    console.log('CSRF Token:', csrftoken);
+
+                    // Make an AJAX request to the Django view with the CSRF token
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/save_profile_info/', true); // Replace with the actual endpoint
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.setRequestHeader('X-CSRFToken', csrftoken); // Include the CSRF token in the request header
+                    xhr.onload = function () {
+                        console.log('Inside saveButton xhr.onload');
+                        if (xhr.status === 200) {
+                            // Handle the success response
+                            console.log('Profile info saved successfully');
+
+                            // Parse the response JSON to get any additional data if needed
+                            var responseData = JSON.parse(xhr.responseText);
+
+                            // Add any additional logic here based on the response
+
+                        } else {
+                            // Handle the error response if needed
+                            console.error('Failed to save profile info');
+                        }
+                    };
+
+                    // Adjust the requestData to include all relevant data
+                    var requestData = 'user_name=' + encodeURIComponent(userName) +
+                        '&last_name=' + encodeURIComponent(lastName) +
+                        '&e_mail=' + encodeURIComponent(email) +
+                        '&phone_number=' + encodeURIComponent(phoneNumber) +
+                        '&user=' + encodeURIComponent(user);
+                    xhr.send(requestData);
+                });
+            });
+
+
+
+
 
         // Update the modal content with the received message
         function updateModalContent(modal, message) {
