@@ -31,12 +31,13 @@ def chat_view(request):
         chat.selected_user_messages = selected_user_messages
     return render(request, 'home/chat.html', {'chats': chats})
 
+@login_required(login_url='/login/')
 def company_view(request):
     company = Company.objects.first()
     return render(request, 'home/company.html', {'company': company})
 
 
-
+@login_required(login_url='/login/')
 def create_message_from_site(request):
     text_message = request.POST.get('text_message')
     user = request.POST.get('user')
@@ -46,7 +47,7 @@ def create_message_from_site(request):
     return JsonResponse({'status': 'success', 'user': user, 'text_message': text_message})
 
 
-
+@login_required(login_url='/login/')
 def chart_data(request):
     def get(self, request, *args, **kwargs):
         chats = ChatUser.objects.all()

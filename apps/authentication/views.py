@@ -11,11 +11,8 @@ from .forms import LoginForm, SignUpForm
 
 def login_view(request):
     form = LoginForm(request.POST or None)
-
     msg = None
-
     if request.method == "POST":
-
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
@@ -24,9 +21,9 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                msg = 'Неверный логин/пароль'
         else:
-            msg = 'Error validating the form'
+            msg = 'Ошибка проверки формы'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
 
