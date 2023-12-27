@@ -1,7 +1,7 @@
 import re
-
+import platform
 import requests
-
+import os
 from historyparser import parse_dialogue, parse_dialogue_to_summary
 from openai import OpenAI
 import utils
@@ -52,24 +52,42 @@ def parse_response(response):
         return user_id, name, phone_number, dialogue_summary
 
     else:
-        print("Unexpected format in the response.")
-        return None
+        print('format is unknown trying to send lead')
+        user_id = values[0].strip().split(':')[1].strip()
+        name = values[1].strip().split(':')[1].strip()
+        phone_number = values[2].strip().split(':')[1].strip()
+        dialogue_summary = values[3].strip().split(':')[1].strip()
+        # You can print or return the extracted information
+        print(f"User ID: {user_id}")
+        print(f"Name: {name}")
+        print(f"Phone Number: {phone_number}")
+        print(f'Summary {dialogue_summary}')
+        b24url = f"https://guruai.bitrix24.ru/rest/1/0u5kbm63tiosg3hd/crm.lead.add.json?FIELDS[TITLE]={dialogue_summary}&FIELDS[NAME]={name}&FIELDS[LAST_NAME]={name}&FIELDS[PHONE][0][VALUE]={phone_number}&FIELDS[PHONE][0][VALUE_TYPE]=WORK"
 
+        req = requests.post(url=b24url)
+        print('BITRIX REQ SENT')
+        # If you want to save the information to variables, you can return them
+        return user_id, name, phone_number, dialogue_summary
+
+def get_encoding():
+    system = platform.system()
+    print(system)
+    return 'cp1251' if system == 'Windows' else 'UTF-8'
 def get_summary(user_id, promt):
+    encoding = get_encoding()
     try:
-        with open(f'Accounts/{user_id}/history.txt', 'r', encoding='UTF-8') as file:
+        with open(f'Accounts/{user_id}/history.txt', 'r', encoding=encoding) as file:
             content = file.read()
-            # content_after_second_last = get_content_after_second_last_dialogue_end(content)
             print(f'КОНТЕНТ НА ПОДВЕДЕНИЕ ИТОГОВ:\n{content}')
             content = parse_dialogue_to_summary(content)
             completion = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=content,
             )
-            with open(f'Accounts/{user_id}/history.txt', 'w', encoding='UTF-8') as file:
+            with open(f'Accounts/{user_id}/history.txt', 'w', encoding=encoding) as file:
                 file.write(f'ИТОГИ НАШЕГО ПРОШЛОГО ДИАЛОГА:{completion.choices[0].message.content}')
-            
-            with open(f'Accounts/{user_id}/history_full.txt', 'a', encoding='UTF-8') as file:
+
+            with open(f'Accounts/{user_id}/history_full.txt', 'a', encoding=encoding) as file:
                 file.write(f'ИТОГИ НАШЕГО ПРОШЛОГО ДИАЛОГА:{completion.choices[0].message.content}')
             return completion.choices[0].message.content
 
