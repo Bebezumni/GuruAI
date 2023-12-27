@@ -257,14 +257,17 @@ class SalesGPT(Chain):
                 conversation_purpose=self.conversation_purpose,
                 conversation_type=self.conversation_type,
             )
+            self.conversation_history.append(f'Guru: {ai_message}')
+            print('added answer to history')
             return ai_message.replace("<END_OF_TURN>", "")
 
         # Add agent's response to conversation history
+        self.conversation_history.append(ai_message)
         agent_name = self.salesperson_name
         #ai_message = agent_name + ": " + ai_message
         if "<END_OF_TURN>" not in ai_message:
             ai_message += " <END_OF_TURN>"
-        self.conversation_history.append(ai_message)
+
         return ai_message.replace("<END_OF_TURN>", "")
 
     @classmethod
@@ -349,8 +352,8 @@ class SalesGPT(Chain):
             stage_analyzer_chain=stage_analyzer_chain,
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
             sales_agent_executor=sales_agent_executor,
-            schedule=schedule,
-            knowledge_base=knowledge_base,
+            # schedule=schedule,
+            # knowledge_base=knowledge_base,
             model_name=llm.model,
             verbose=verbose,
             **kwargs,

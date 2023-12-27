@@ -12,17 +12,17 @@ class SalesAgentManager:
 
     def initialize_sales_agent(self, user_id):
         llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
-        sales_agent = SalesGPT.from_llm(llm, use_tools=True,
-                                        verbose=False,
+        sales_agent = SalesGPT.from_llm(llm, use_tools=False,
+                                        verbose=True,
                                         product_catalog="examples/sample_product_catalog.txt",
                                         schedule_file="examples/schedule.txt",
                                         salesperson_name='Guru',
                                         salesperson_role="Инвестиционный консультант",
                                         company_name="Inside Money",
                                         company_business='''Компания Inside Money - строит новую долину стартапов с развитой экосистемой в сердце Бали,Мы предлагаем инвестиции в коммерческую недвижимость с высокой окупаемостью''',
-                                        company_values='Создание высокодоходных инвестиционных условий в коммерческую недвижимость на Бали для наших клиентов ',
+                                        company_values='Создание высокодоходных инвестиционных условий в коммерческую недвижимость на Бали для своих партнеров',
                                         conversation_type='chat',
-                                        conversation_purpose='узнать что мы за компания, узнать какие мы услуги предоставляем, узнать сколько он может заработать на инвестициях в коммерческую недвижимость на Бали, записаться на zoom встречу с руководителем отдела продаж Евгением Барабаш, дать свой номер телефона и имя',
+                                        conversation_purpose='Рассказать о компании INSIDE MONEY, презентовать возможность заработать на инвестициях в коммерческую недвижимость на Бали, собрать информацию об опыте и сумме инвестиций, записаться на zoom встречу с руководителем отдела Евгением Барабашем, узнать номер телефона и имя',
                                         )
         sales_agent.seed_agent()
         return sales_agent

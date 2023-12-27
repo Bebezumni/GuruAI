@@ -57,19 +57,19 @@ def process_messages():
             file_id = first_photo.file_id
             file_path = GPTbot.get_file(file_id).file_path
             photo_url = f'https://api.telegram.org/file/bot{GPTbot.token}/{file_path}'
-
+            #
             user, created = ChatUser.objects.get_or_create(
                 user_name=user_name,
                 user_id=user_id,
                 messenger='Telegram',
                 messenger_id=message.chat.id
             )
-
-            # Download and save the file using the FileField
-            content = requests.get(photo_url).content
-            user.profile_photo.save(f'file_{user.id}.jpg', ContentFile(content))
-
-            print(f"User's photo downloaded and saved: {user.profile_photo.url}")
+            #
+            # # Download and save the file using the FileField
+            # content = requests.get(photo_url).content
+            # user.profile_photo.save(f'file_{user.id}.jpg', ContentFile(content))
+            #
+            # print(f"User's photo downloaded and saved: {user.profile_photo.url}")
 
         else:
             user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram',
