@@ -166,7 +166,7 @@ def start_command_handler(message: callable) -> None:
     sales_agent.determine_conversation_stage()
     ai_answer = sales_agent.step()
     GPTbot.reply_to(message=message, text=ai_answer)
-    user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id)
+    user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram', messenger_id=message.chat.id)
     create_ai_msg(user, ai_answer, 'Guru')
 @GPTbot.message_handler(content_types=["text", "voice"])
 def handle_text(message):
