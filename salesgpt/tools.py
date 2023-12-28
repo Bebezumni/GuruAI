@@ -50,19 +50,19 @@ def setup_schedule_knowledge_base(schedule_file: str = None):
 
 
 
-def get_tools(knowledge_base, schedule):
+def get_tools(knowledge_base):
     # we only use one tool for now, but this is highly extensible!
     tools = [
         Tool(
-            name="ProductSearch",
+            name="CompanyInfo",
             func=knowledge_base.run,
-            description="useful for when you need to answer questions about product information",
+            description="use when you need to answer questions about our team, benefits of bali and why to choose bali, our ratings, project sizes and location",
         ),
-        Tool(
-            name="ScheduleSearch",
-            func=schedule.run,
-            description="useful for when you need to set an appointment or search for available time slots in the schedule",
-        )
+        # Tool(
+        #     name="ScheduleSearch",
+        #     func=schedule.run,
+        #     description="useful for when you need to set an appointment or search for available time slots in the schedule",
+        # )
     ]
     return tools
 

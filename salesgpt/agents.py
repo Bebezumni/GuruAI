@@ -306,7 +306,7 @@ class SalesGPT(Chain):
             schedule_file = kwargs["schedule_file"]
             knowledge_base = setup_knowledge_base(product_catalog)
             schedule = setup_schedule_knowledge_base(schedule_file)
-            tools = get_tools(knowledge_base, schedule)
+            tools = get_tools(knowledge_base)
             prompt = CustomPromptTemplateForTools(
                 template=SALES_AGENT_TOOLS_PROMPT,
                 tools_getter=lambda x: tools,
@@ -353,7 +353,7 @@ class SalesGPT(Chain):
             sales_conversation_utterance_chain=sales_conversation_utterance_chain,
             sales_agent_executor=sales_agent_executor,
             # schedule=schedule,
-            # knowledge_base=knowledge_base,
+            knowledge_base=knowledge_base,
             model_name=llm.model,
             verbose=verbose,
             **kwargs,
