@@ -19,7 +19,7 @@ ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='127.0.0.1'), '194.180.188.182', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='194.180.188.182'), '194.180.188.182', '0.0.0.0', 'insidemoney.guruai.space']
 CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER', default='127.0.0.1')]
 
 # Application definition
@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',
+    'sslserver',
 ]
 
 MIDDLEWARE = [

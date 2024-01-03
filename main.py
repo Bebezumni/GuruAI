@@ -37,8 +37,24 @@ llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
 sales_agent_manager = SalesAgentManager()
 import requests
 
+
 def create_msg_from_site(id, text):
     GPTbot.send_message(id, text)
+
+image1='im1.jpg'
+image2='im2.jpg'
+image3='im3.jpg'
+
+
+def check_photo_code(GPTbot, chat_id, assistant_response, promt):
+    if '<PHOTO_CODE>' in assistant_response:
+        print('Photo code detected')
+        assistant_response = assistant_response.replace('<PHOTO_CODE>', '')
+        GPTbot.send_photo(chat_id, open(image1, 'rb'))
+        GPTbot.send_photo(chat_id, open(image2, 'rb'))
+        GPTbot.send_photo(chat_id, open(image3, 'rb'))
+    return assistant_response
+
 
 def process_messages():
     while True:
@@ -88,7 +104,8 @@ def process_messages():
             print(ai_answer)
             create_ai_msg(user, ai_answer, 'Guru')
             utils.write_to_history_assistant(user_id, ai_answer)
-            ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)    
+            ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
+            
             answer = (f'{user_promt}')
             print(f'ai answer:{ai_answer}')
             print(answer)
@@ -96,6 +113,7 @@ def process_messages():
                 GPTbot.reply_to(message=message, text=ai_answer)
             else:
                 print("Error: ai_answer is empty. Check your message generation logic.")
+            ai_answer = check_photo_code(GPTbot, chat_id, ai_answer, user_promt)
         elif message.content_type == "voice":
             logger.info('Audio message found')
             file_info = GPTbot.get_file(message.voice.file_id)

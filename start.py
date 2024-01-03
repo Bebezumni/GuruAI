@@ -14,7 +14,14 @@ def start_chatbot():
 def start_django_server():
     try:
         print("Starting Django Server...")
-        subprocess.run(["python", "manage.py", "runserver", '0.0.0.0:8000'])
+        subprocess.run([
+  	  "python",
+ 	   "manage.py",
+ 	   "runsslserver",
+ 	   '194.180.188.182:8000',
+ 	   '--cert', '/etc/letsencrypt/live/insidemoney.guruai.space/fullchain.pem',
+ 	   '--key', '/etc/letsencrypt/live/insidemoney.guruai.space/privkey.pem'
+	])  
     except KeyboardInterrupt:
         print("Django server thread interrupted")
 
