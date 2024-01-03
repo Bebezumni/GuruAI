@@ -66,8 +66,6 @@ def process_messages():
         user_profile_photos = GPTbot.get_user_profile_photos(user_id)
         print(user_profile_photos)
         user_name = message.from_user.first_name
-
-
         if user_profile_photos.photos:
             first_photo = user_profile_photos.photos[0][0]
             file_id = first_photo.file_id
@@ -86,7 +84,6 @@ def process_messages():
             # user.profile_photo.save(f'file_{user.id}.jpg', ContentFile(content))
             #
             # print(f"User's photo downloaded and saved: {user.profile_photo.url}")
-
         else:
             user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram',
                                                            messenger_id=message.chat.id)
@@ -103,17 +100,9 @@ def process_messages():
             ai_answer = sales_agent.step()
             print(ai_answer)
             create_ai_msg(user, ai_answer, 'Guru')
-            utils.write_to_history_assistant(user_id, ai_answer)
-            ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
-            
             answer = (f'{user_promt}')
             print(f'ai answer:{ai_answer}')
             print(answer)
-            if ai_answer:
-                GPTbot.reply_to(message=message, text=ai_answer)
-            else:
-                print("Error: ai_answer is empty. Check your message generation logic.")
-            ai_answer = check_photo_code(GPTbot, chat_id, ai_answer, user_promt)
         elif message.content_type == "voice":
             logger.info('Audio message found')
             file_info = GPTbot.get_file(message.voice.file_id)
@@ -141,22 +130,23 @@ def process_messages():
                 sales_agent.determine_conversation_stage()
                 ai_answer = sales_agent.step()
                 print(f'ai answer:{ai_answer}')
-                ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
-                utils.write_to_history_assistant(user_id, ai_answer)
                 print('succ utils')
-                GPTbot.reply_to(message=message, text=ai_answer)
                 create_ai_msg(user, ai_answer, 'Guru')
             except subprocess.CalledProcessError as e:
                 logger.error(f"Error running ffmpeg: {e}")
             finally:
                 print('trying to delete')
                 try:
-                    
                     os.remove(filename)
                     os.remove(wav_filename)
                     logger.info(f"Files {filename} and {wav_filename} deleted.")
                 except Exception as e:
                     logger.error(f"Error deleting files: {e}")
+        
+        ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
+        utils.write_to_history_assistant(user_id, ai_answer)
+        GPTbot.reply_to(message=message, text=ai_answer)
+        ai_answer = check_photo_code(GPTbot, chat_id, ai_answer, user_promt)    
         message_queue.task_done()
         print('mesage task done')
 

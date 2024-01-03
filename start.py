@@ -18,9 +18,9 @@ def start_django_server():
   	  "python",
  	   "manage.py",
  	   "runsslserver",
- 	   '194.180.188.182:8000',
- 	   '--cert', '/etc/letsencrypt/live/insidemoney.guruai.space/fullchain.pem',
- 	   '--key', '/etc/letsencrypt/live/insidemoney.guruai.space/privkey.pem'
+ 	   '5.35.90.130:8000',
+ 	   '--cert', '/etc/letsencrypt/live/chatai.adda-group.com/fullchain.pem',
+ 	   '--key', '/etc/letsencrypt/live/chatai.adda-group.com/privkey.pem'
 	])  
     except KeyboardInterrupt:
         print("Django server thread interrupted")
