@@ -45,6 +45,21 @@ image1='im1.jpg'
 image2='im2.jpg'
 image3='im3.jpg'
 
+def count_tokens(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+            tokens = content.split()
+        return len(tokens)
+    except FileNotFoundError:
+        print(f'File "{file_path}" not found. Skipping.')
+        return 0
+
+def clear_file(file_path):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write('')  # Очищаем файл, записывая пустую строку
+
+
 
 def check_photo_code(GPTbot, chat_id, assistant_response, promt):
     if '<PHOTO_CODE>' in assistant_response:
@@ -66,6 +81,19 @@ def process_messages():
         user_profile_photos = GPTbot.get_user_profile_photos(user_id)
         print(user_profile_photos)
         user_name = message.from_user.first_name
+        file_path = f'Accounts/{user_id}/history.txt'
+
+        # Подсчет токенов
+        token_count = count_tokens(file_path)
+        print(f'Количество токенов в файле: {token_count}')
+
+        # Проверка и очистка файла
+        if token_count > 3000:
+            print('Токенов больше 3000. Очищаем файл.')
+            clear_file(file_path)
+            print('Файл очищен.')
+        else:
+            print('Токенов меньше или равно 3000. Файл не требует очистки.')
         if user_profile_photos.photos:
             first_photo = user_profile_photos.photos[0][0]
             file_id = first_photo.file_id
