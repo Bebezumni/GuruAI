@@ -10,7 +10,7 @@ from sales_agent_manager import SalesAgentManager
 from apps.home.models import ChatUser, UserMessage, AiAnswer
 from objects_creator import create_user_msg, create_ai_msg
 
-vk_session = vk_api.VkApi(token="vk1.a.5Xd_NDBmW8a2c8hT7mko3m02rU7u_s_LtSDuAHSkVhyp8sJIULuUqE3qkKbJh-KQwjYhR9JAWwx9_Ychesk7L4EnvERmFp9bk31yOlwWjnjNr4YwZ67XgbSxjpgCrBP9D9RzmClKXP6jIgxv6Og9dDwUERaURoIVnjKemWuxpSRM28ILNELD8bQqc9RPs3UZFNaEX6y8NthwAZUMglU_kQ")
+vk_session = vk_api.VkApi(token="")
 session_api = vk_session.get_api()
 longpool = VkLongPoll(vk_session)
 sales_agent_manager = SalesAgentManager()

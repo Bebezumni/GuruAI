@@ -1,15 +1,12 @@
-import openai
 import whisper
 import openai
 import ending
 import json
 import os
-import asyncio
-import datetime
-
+import platform
 # import time
 from llama_index import StorageContext, load_index_from_storage
-Token = "6813044431:AAHFzB6odk6ntTt2e_qcaIQPOCWT1wlBSHk"
+Token = "6883159096:AAGVNYITMfoEXlxdwUAijYF6PCEh0MdbLA8"
 openai_api_key = "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"
 WHATSAPP_BUSINESS_ACCOUNT_ID = "168724609661438"
 VERIFY_TOKEN='GURUTOKEN'
@@ -133,3 +130,35 @@ def get_thread_id(user_id):
     except json.JSONDecodeError:
         print("Error: Unable to decode JSON.")
         return None
+
+image1='im1.jpg'
+image2='im2.jpg'
+image3='im3.jpg'
+
+def check_photo_code(GPTbot, chat_id, assistant_response, promt):
+    if '<PHOTO_CODE>' in assistant_response:
+        print('Photo code detected')
+        assistant_response = assistant_response.replace('<PHOTO_CODE>', '')
+        GPTbot.send_photo(chat_id, open(image1, 'rb'))
+        GPTbot.send_photo(chat_id, open(image2, 'rb'))
+        GPTbot.send_photo(chat_id, open(image3, 'rb'))
+    return assistant_response
+def get_encoding():
+    system = platform.system()
+    print(system)
+    return 'cp1251' if system == 'Windows' else 'UTF-8'
+
+def count_tokens(file_path):
+    encoding = get_encoding()
+    try:
+        with open(file_path, 'r', encoding=encoding) as file:
+            content = file.read()
+            tokens = content.split()
+        return len(tokens)
+    except FileNotFoundError:
+        print(f'File "{file_path}" not found. Skipping.')
+        return 0
+
+def clear_file(file_path):
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write('')  # Очищаем файл, записывая пустую строку

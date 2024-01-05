@@ -13,7 +13,7 @@ class SalesAgentManager:
     def initialize_sales_agent(self, user_id):
         llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
         sales_agent = SalesGPT.from_llm(llm, use_tools=False,
-                                        verbose=True,
+                                        verbose=False,
                                         product_catalog="examples/sample_product_catalog.txt",
                                         schedule_file="examples/schedule.txt",
                                         salesperson_name='Guru',

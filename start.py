@@ -24,7 +24,16 @@ def start_django_server():
 	])  
     except KeyboardInterrupt:
         print("Django server thread interrupted")
-
+def start_django_server_nossl():
+    try:
+        print("Starting Django Server...")
+        subprocess.run([
+  	  "python",
+ 	   "manage.py",
+ 	   "runserver",
+	])
+    except KeyboardInterrupt:
+        print("Django server thread interrupted")
 def start_webhook_server():
     try:
         print("Starting Webhooks Server...")
@@ -49,7 +58,7 @@ if __name__ == "__main__":
 
     # Start the chatbot and Django server in separate threads
     chatbot_thread = threading.Thread(target=start_chatbot)
-    django_thread = threading.Thread(target=start_django_server)
+    django_thread = threading.Thread(target=start_django_server_nossl)
     webhook_thread = threading.Thread(target=start_webhook_server)
     vk_thread = threading.Thread(target=start_vk_app)
 
@@ -59,14 +68,14 @@ if __name__ == "__main__":
         chatbot_thread.start()
         time.sleep(2)
         # webhook_thread.start()
-        time.sleep(2)
-        vk_thread.start()
+        # time.sleep(2)
+        # vk_thread.start()
 
         # Wait for both threads to finish
         chatbot_thread.join()
         django_thread.join()
         # webhook_thread.join()
-        vk_thread.join()
+        # vk_thread.join()
 
     except KeyboardInterrupt:
         print("\nKeyboardInterrupt. Stopping all threads.")
