@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     # Start the chatbot and Django server in separate threads
     chatbot_thread = threading.Thread(target=start_chatbot)
-    django_thread = threading.Thread(target=start_django_server_nossl)
+    django_thread = threading.Thread(target=start_django_server)
     webhook_thread = threading.Thread(target=start_webhook_server)
     vk_thread = threading.Thread(target=start_vk_app)
 

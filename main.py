@@ -37,7 +37,6 @@ print(f"The Bot is online (id: {GPTbot.get_me().id})...")
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 message_queue = queue.Queue()
-llm = ChatLiteLLM(temperature=0.4, model_name="gpt-3.5-turbo")
 sales_agent_manager = SalesAgentManager()
 ACCOUNTS_DIR = "Accounts"
 RECORDINGS_DIR = "recordings"
@@ -121,6 +120,7 @@ def process_messages():
         ai_answer = utils.check_photo_code(GPTbot, chat_id, ai_answer, user_promt)
         message_queue.task_done()
         print('message task done')
+
 @GPTbot.message_handler(commands=["start"])
 def start_command_handler(message: callable) -> None:
     user_id = message.from_user.id
