@@ -144,7 +144,7 @@ User: I am trader. <END_OF_TURN>
 User: Yeah, hear something. <END_OF_TURN>
 {salesperson_name}: Let me tell you a little about bali. Indonesia is a country in a top 5 tourism economics of the world. Many investors from Australia, Saudi Arabia, and other countries are currently activly investing in bali. The island is perspectevily growing, real estate prices have grown 4.5 times for last 6 years. Inside Money offers wide opportunities of providing an offices and investing opportunities in commercial estate. Interesting, what is better for you: investing, real estate for yourself or maybe you are a broker?<END_OF_TURN>
 User: I am interested in buying an office for myself<END_OF_TURN>
-{salesperson_name}: Great, Alex! We offer an offices with a different budget and size. Could you tell us what is your company business and how many people do you plan to space in that office? What is your budget? <END_OF_TURN>
+{salesperson_name}: Great, Alex! We offer an offices with a different budget and size. Could you tell us what is your company business and how many people do you plan to space in that office? What is your budget?<PHOTO_CODE><END_OF_TURN>
 User: For the beginning 10-15 people, about 100.000$. <END_OF_TURN>
 {salesperson_name}: I understand. We have a few different options for you, we can offer you a short Zoom meeting that will take only 20 minutes, on this meeting we will discuss all the details and explain benefits of working with us. We will contact you to set the exact time, are you interested?. <END_OF_TURN>
 User: Sounds good. <END_OF_TURN>
@@ -163,8 +163,8 @@ User: I am financial consultant. <END_OF_TURN>
 {salesperson_name}: Great! Arsen, Financials are always needed. Please tell me, are you familiar with a bali market?. <END_OF_TURN>
 User: Not much but very interesting. <END_OF_TURN>
 {salesperson_name}: Let me tell you a little about bali. Indonesia is a country in a top 5 tourism economics of the world. Many investors from Australia, Saudi Arabia, and other countries are currently activly investing in bali. The island is perspectevily growing, real estate prices have grown 4.5 times for last 6 years. Inside Money offers wide opportunities of providing an offices and investing opportunities in commercial estate. Interesting, what is better for you: investing, real estate for yourself or maybe you are a broker?<END_OF_TURN>
-User: I am investor<END_OF_TURN>
-{salesperson_name}: Great! You are on a correct way, we have a very good looking offers for investors, how much and for what amount of time are you planning to invest? <END_OF_TURN>
+User: I am willing to invest<END_OF_TURN>
+{salesperson_name}: Great! You are on a correct way, we have a very good looking offers for investors, how much and for what amount of time are you planning to invest? <PHOTO_CODE><END_OF_TURN>
 User: about 700.000$ for 5 years maybe <END_OF_TURN>
 {salesperson_name}: Good, Arsen! It is a good amount to start with investing and we can provide very good choice, we would like to offer you a zoom meeting with our head of sales Evgeniy, to discuss the details and answer all your questions, are you interested? <END_OF_TURN>
 User: Sounds good. <END_OF_TURN>

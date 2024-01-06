@@ -84,8 +84,7 @@ def process_messages():
             #
             # print(f"User's photo downloaded and saved: {user.profile_photo.url}")
         else:
-            user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram',
-                                                           messenger_id=message.chat.id)
+            user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=user_id, messenger='Telegram', messenger_id=message.chat.id)
             print('user without photo created or retrieved')
         if message.content_type == "text":
             user_promt = message.text.strip()
@@ -101,23 +100,14 @@ def process_messages():
                 f.write(downloaded_file)
             wav_filename = Path(__file__).parent / f'{RECORDINGS_DIR}/{uuid}.wav'
             print(f'WAV CREATED AT {wav_filename}')
-            try:
-                subprocess.run(
-                    ['ffmpeg', '-i', str(filename), '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16k',
-                     str(wav_filename)],
-                    check=True)
-                user_promt = utils.speech_to_text(str(wav_filename))
-                print('WHISPER SUCCESS')
-            except subprocess.CalledProcessError as e:
-                logger.error(f"Error running ffmpeg: {e}")
-            finally:
-                print('trying to delete')
-                try:
-                    os.remove(filename)
-                    os.remove(wav_filename)
-                    logger.info(f"Files {filename} and {wav_filename} deleted.")
-                except Exception as e:
-                    logger.error(f"Error deleting files: {e}")
+            subprocess.run(
+                ['ffmpeg', '-i', str(filename), '-acodec', 'pcm_s16le', '-ac', '1', '-ar', '16k',
+                 str(wav_filename)],
+                check=True)
+            user_promt = utils.speech_to_text(str(wav_filename))
+            print(f'WHISPER SUCCESS PROMT:\n{user_promt}')
+            os.remove(filename)
+            os.remove(wav_filename)
         create_user_msg(user, user_promt)
         utils.write_to_history(user_id, user_name, user_promt)
         sales_agent = sales_agent_manager.get_sales_agent(user_id)
