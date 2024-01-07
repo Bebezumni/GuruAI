@@ -134,6 +134,7 @@ def get_thread_id(user_id):
 image1='im1.jpg'
 image2='im2.jpg'
 image3='im3.jpg'
+image4='im4.jpg'
 
 def check_photo_code(GPTbot, chat_id, assistant_response, promt):
     if '<PHOTO_CODE>' in assistant_response:
@@ -143,6 +144,14 @@ def check_photo_code(GPTbot, chat_id, assistant_response, promt):
         GPTbot.send_photo(chat_id, open(image2, 'rb'))
         GPTbot.send_photo(chat_id, open(image3, 'rb'))
     return assistant_response
+    
+def check_bali_code(GPTbot, chat_id, assistant_response, promt):
+    if '<BALI_CODE>' in assistant_response:
+        print('Bali code detected')
+        assistant_response = assistant_response.replace('<BALI_CODE>', '')
+        GPTbot.send_photo(chat_id, open(image4, 'rb'))
+    return assistant_response
+    
 def get_encoding():
     system = platform.system()
     print(system)

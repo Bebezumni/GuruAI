@@ -116,6 +116,7 @@ def process_messages():
         ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
         create_ai_msg(user, ai_answer, 'Guru')
         utils.write_to_history_assistant(user_id, ai_answer)
+        ai_answer = utils.check_bali_code(GPTbot, chat_id, ai_answer, user_promt)
         GPTbot.reply_to(message=message, text=ai_answer.replace('<PHOTO_CODE>', ''))
         ai_answer = utils.check_photo_code(GPTbot, chat_id, ai_answer, user_promt)
         message_queue.task_done()
