@@ -1,12 +1,12 @@
 import dotenv
 import jwt
 import requests
-from datetime import datetime
 import time
 import logging
 from requests.exceptions import JSONDecodeError
 from dotenv import load_dotenv
 import os
+from datetime import datetime, timedelta
 
 dotenv_path = os.path.join('', '.env')
 load_dotenv(dotenv_path=dotenv_path)
@@ -25,6 +25,34 @@ def _is_expire(token: str):
     now = datetime.utcnow()
     return now >= exp
 
+
+import jwt
+from datetime import datetime, timedelta
+
+
+def is_minute_passed(token: str, issuance_window_minutes=1):
+    try:
+        token_data = jwt.decode(token, options={"verify_signature": False})
+
+        # Use the current time instead of 'iat'
+        now = datetime.utcnow()
+
+        # Calculate the time difference in minutes
+        iat_timestamp = token_data["iat"]
+        iat_datetime = datetime.utcfromtimestamp(iat_timestamp)
+        time_difference = (now - iat_datetime).total_seconds() / 60
+
+        print("Issuance Time:", iat_datetime)
+        print("Current Time:", now)
+        print("Time Difference (minutes):", time_difference)
+
+        return time_difference >= issuance_window_minutes
+    except jwt.ExpiredSignatureError:
+        print("Token is already expired.")
+        return True
+    except jwt.DecodeError:
+        print("Error decoding token.")
+        return False
 
 def _save_tokens(access_token: str, refresh_token: str):
     # Записываем в ключи .env
@@ -219,23 +247,24 @@ def add_unsorted_lead(self, **kwargs):
 
 class AmoCRMWrapper:
     def init_oauth2(self):
-        if _get_access_token()== True and _is_expire(_get_access_token()):
+        if len(_get_access_token()) > 10:
             print('token exists')
-            _get_new_tokens()
-            data = {
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "grant_type": 'refresh_token',
-                "refresh_token": _get_refresh_token(),
-                "redirect_uri": redirect_uri
-            }
-            response = requests.post("https://{}.amocrm.ru/oauth2/access_token".format(subdomain), json=data).json()
-            print(response)
-            access_token = response["access_token"]
-            refresh_token = response["refresh_token"]
-            print(access_token)
-            print(refresh_token)
-            _save_tokens(access_token, refresh_token)
+            if is_minute_passed(_get_access_token(), issuance_window_minutes=10080):
+                _get_new_tokens()
+                data = {
+                    "client_id": client_id,
+                    "client_secret": client_secret,
+                    "grant_type": 'refresh_token',
+                    "refresh_token": _get_refresh_token(),
+                    "redirect_uri": redirect_uri
+                }
+                response = requests.post("https://{}.amocrm.ru/oauth2/access_token".format(subdomain), json=data).json()
+                print(response)
+                access_token = response["access_token"]
+                refresh_token = response["refresh_token"]
+                print(access_token)
+                print(refresh_token)
+                _save_tokens(access_token, refresh_token)
         else:
             data = {
                 "client_id": client_id,
@@ -252,9 +281,6 @@ class AmoCRMWrapper:
             print(refresh_token)
             _save_tokens(access_token, refresh_token)
     def _base_request(self, **kwargs):
-        if _is_expire(_get_access_token()):
-            _get_new_tokens()
-
         access_token = "Bearer " + _get_access_token()
         headers = {"Authorization": access_token}
         req_type = kwargs.get("type")
@@ -276,16 +302,30 @@ class AmoCRMWrapper:
                 kwargs.get("endpoint")), headers=headers, json=kwargs.get("data")).json()
         return response
 
+def debug_token_info(token):
+    try:
+        token_data = jwt.decode(token, options={"verify_signature": False})
+        print("Decoded Token Data:", token_data)
+        return token_data
+    except jwt.ExpiredSignatureError:
+        print("Token is already expired.")
+        return None
+    except jwt.JWTDecodeError:
+        print("Error decoding token.")
+        return None
 
+# Call this function when you get the access token
+token_data = debug_token_info(_get_access_token())
 amocrm_wrapper_1 = AmoCRMWrapper()
 amocrm_wrapper_1.init_oauth2()
+
+
+
 while True:
-    time.sleep(5)
-    if _is_expire(_get_access_token()):
+    time.sleep(43200)
+    access_token = os.getenv("AMOCRM_ACCESS_TOKEN")
+    if is_minute_passed(access_token, issuance_window_minutes=10080):
         _get_new_tokens()
-        print('token expired')
+        print('Token updated')
     else:
-        _get_new_tokens()
-        print('token is alive')
-
-
+        print('Token is still valid')
