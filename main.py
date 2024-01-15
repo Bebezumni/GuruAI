@@ -44,7 +44,26 @@ crm = utils.crm
 # ''''''
 
 
-
+def make_openai_request(message, from_number, user_name):
+    ai_prefix = 'Guru'
+    accounts_dir = os.path.join(ACCOUNTS_DIR, str(from_number))
+    if not os.path.exists(accounts_dir):
+        os.makedirs(accounts_dir)
+    history_file_path = os.path.join(accounts_dir, 'history.txt')
+    with open(history_file_path, 'a') as file:
+        file.close()
+    utils.write_to_history(from_number, from_number, message)
+    sales_agent = sales_agent_manager.get_sales_agent(from_number)
+    sales_agent.human_step(message)
+    sales_agent.determine_conversation_stage()
+    user, created = ChatUser.objects.get_or_create(user_name=user_name, user_id=from_number,
+                                                   messenger='Site message')
+    create_user_msg(user, message)
+    ai_answer = sales_agent.step()
+    utils.write_to_history_assistant(from_number, ai_answer)
+    ai_answer = utils.check_dialogue_end_and_print_summary(from_number, ai_answer, message, crm=crm)
+    create_ai_msg(user, ai_answer, ai_prefix=ai_prefix)
+    return ai_answer
 def create_msg_from_site(id, text):
     GPTbot.send_message(id, text)
 

@@ -4,7 +4,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 from channels.layers import get_channel_layer
-from main import create_msg_from_site
+from main import create_msg_from_site, make_openai_request
 from django import template
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -16,6 +16,7 @@ from operator import attrgetter
 from itertools import chain
 from django.http import JsonResponse
 from asgiref.sync import async_to_sync
+from random import randint
 
 
 @login_required(login_url='/login/')
@@ -36,10 +37,32 @@ def company_view(request):
     company = Company.objects.first()
     return render(request, 'home/company.html', {'company': company})
 
+@login_required(login_url='/login/')
+def site_chat(request):
+    if request.method == 'POST':
+        print(request)
+        user_id = randint(1000, 1000000)
+        user_name = request.POST.get('user_name')
+        user_message = request.POST.get('user_message')
+        print(f'user message:  {user_message}')
+        print(f"user id from site {user_id}, msg: {user_message}, name: {user_name}")
+        # Simulate a response from the server
+        make_openai_request(user_message, user_id, f"{user_name}(site)",)
+        response_message = make_openai_request(user_message, user_id, user_name)
+        # Return a JsonResponse with the response
+        return JsonResponse({'status': 'success', 'response_message': response_message})
+
+
+@login_required(login_url='/login/')
+def site_chat_view(request):
+    return render(request, 'home/chat_tilda.html')
+
 
 @login_required(login_url='/login/')
 def create_message_from_site(request):
+
     text_message = request.POST.get('text_message')
+
     user = request.POST.get('user')
     user_object = ChatUser.objects.get_or_create(user_id=user)
     AiAnswer.objects.create(user=user_object[0], message_text=text_message, ai_prefix='Guru: ')

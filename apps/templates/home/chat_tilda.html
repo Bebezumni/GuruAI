@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        #chat {
+            border: 1px solid #ccc;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat"></div>
+<button id="sendButton">Open Prompt and Send</button>
+
+<script>
+    document.getElementById('sendButton').addEventListener('click', function() {
+        var userMessage = window.prompt('Enter your message:');
+        var csrftoken = getCookie('csrftoken');
+        console.log('CSRF Token:', csrftoken);
+        if (userMessage) {
+            updateChat('You: ' + userMessage);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/site_chat/', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', csrftoken);
+
+            var userID = getBrowserID();
+            var userName = 'Arseniy';
+
+            var data = {
+                "ID": userID,
+                "user_message": userMessage,
+                "user_name": userName
+            };
+
+            var jsonData = JSON.stringify(data);
+            console.log(jsonData)
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    console.log(xhr.responseText)
+                    var serverResponse = JSON.parse(xhr.responseText);
+                    var responseMessage = serverResponse.response_message;
+                    updateChat('Server: ' + responseMessage);
+                } else {
+                    console.error('Error sending request:', xhr.statusText);
+                }
+            };
+
+            xhr.onerror = function() {
+                console.error('Network error while sending request');
+            };
+            var requestData = 'user_message=' + encodeURIComponent(userMessage) +
+                    '&user_id=' + encodeURIComponent(userID)+
+                    '&user_name=' + encodeURIComponent(userName);
+            xhr.send(requestData);
+
+        }
+    });
+
+    function updateChat(message) {
+        var chatDiv = document.getElementById('chat');
+        var newMessage = document.createElement('p');
+        newMessage.textContent = message;
+        chatDiv.appendChild(newMessage);
+
+        chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+
+    function getBrowserID() {
+        return Math.random().toString(36).substring(7);
+    }
+
+    function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+</script>
+
+</body>
+</html>

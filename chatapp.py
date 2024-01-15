@@ -86,7 +86,6 @@ def home():
         threading.Thread(target=process_message, args=(text, user_id)).start()
     return '200'
 
-
 # @app.route("/callback", methods=["GET", "POST"])
 # def callback():
 #     print(request.get_json())

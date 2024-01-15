@@ -77,12 +77,9 @@ if __name__ == "__main__":
         time.sleep(2)
         webhook_thread.start()
         time.sleep(2)
-
         lead_thread.start()
         # time.sleep(2)
         # vk_thread.start()
-
-        # Wait for both threads to finish
         chatbot_thread.join()
         django_thread.join()
         lead_thread.join()
