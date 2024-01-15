@@ -40,6 +40,7 @@ message_queue = queue.Queue()
 sales_agent_manager = SalesAgentManager()
 ACCOUNTS_DIR = "Accounts"
 RECORDINGS_DIR = "recordings"
+crm = utils.crm
 # ''''''
 
 
@@ -113,7 +114,7 @@ def process_messages():
         sales_agent.human_step(user_promt)
         sales_agent.determine_conversation_stage()
         ai_answer = sales_agent.step()
-        ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt)
+        ai_answer = utils.check_dialogue_end_and_print_summary(user_id, ai_answer, user_promt, crm=crm)
         create_ai_msg(user, ai_answer, 'Guru')
         utils.write_to_history_assistant(user_id, ai_answer)
         ai_answer = utils.check_bali_code(GPTbot, chat_id, ai_answer, user_promt)

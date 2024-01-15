@@ -13,7 +13,7 @@ VERIFY_TOKEN='GURUTOKEN'
 WHATSAPP_TOKEN='EAANfmCTCQNsBO6NYe1ZBiZB6QVMsZAGAKn4x7lmgCRyZCzJx2b6CtbWqcfIlKgO0ZADCd06H8tBr2deHfzW2AJoqVtHBpoiiCyWwZAIimT492p433JodW7ePfPlHekc1dZCgZA9paZCXGmwPC4XUoZAWbXPZCPVOZClHk99ZC81SjQn0pY9cOaC6KuwQCCRcjZCz2TgfnZCvugOpbKFWPJnRcAeTGTZBOs86FsvyHfCE4xE5utr7regh'
 openai.api_key = openai_api_key
 wh_model = whisper.load_model("base")
-
+crm = 'amo'
 def chatbot(question):
         """
         Отвечает на вопрос с использованием ранее обученного индекса.
@@ -39,22 +39,31 @@ def speech_to_text(audio_data) -> str:
     text_value = converted_text['text']
     return text_value
 
-def check_dialogue_end_and_print_summary(user_id, assistant_response, promt):
-    if '<END_OF_CALL>' in assistant_response:
-        print('dialogue end detected')
+def check_dialogue_end_and_print_summary(user_id, assistant_response, promt, crm):
+    if crm == 'amo':
+        if '<END_OF_CALL>' in assistant_response:
+            print('dialogue end detected for amo crm')
+            assistant_response = assistant_response.replace('<END_OF_CALL>', '')
+            summary = ending.get_summary(user_id, promt)
+            print(f'ИТОГИ ДИАЛОГА:\n {summary}')
+            ending.parse_response(summary, crm)
 
-        # Print the original response
-        print(f'Original response: {assistant_response}')
+    else:
+        if '<END_OF_CALL>' in assistant_response:
+            print('dialogue end detected')
 
-        # Replace <DIALOGUE_END> with an empty string
-        assistant_response = assistant_response.replace('<END_OF_CALL>', '')
+            # Print the original response
+            print(f'Original response: {assistant_response}')
 
-        # Print the modified response
-        print(f'Modified response: {assistant_response}')
+            # Replace <DIALOGUE_END> with an empty string
+            assistant_response = assistant_response.replace('<END_OF_CALL>', '')
 
-        summary = ending.get_summary(user_id, promt)
-        print(f'ИТОГИ ДИАЛОГА:\n {summary}')
-        ending.parse_response(summary)
+            # Print the modified response
+            print(f'Modified response: {assistant_response}')
+
+            summary = ending.get_summary(user_id, promt)
+            print(f'ИТОГИ ДИАЛОГА:\n {summary}')
+            ending.parse_response(summary, crm)
     return assistant_response
 
 def write_to_history(user_id, user_name, text):

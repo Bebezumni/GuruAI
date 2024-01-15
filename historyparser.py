@@ -21,7 +21,7 @@ def parse_dialogue_to_summary(dialogue_text):
 
             # Add the entry to the list
             dialogue_entries.append({"role": role, "content": content})
-    dialogue_entries.append({"role": 'user', "content": 'Проанализируй весь диалог и подведи краткие итоги в формате: {user_id, имя, номер телефона, итоги диалога} не добавляй ничего лишнего, ничего больше, только json в заданном формате'})
+    dialogue_entries.append({"role": 'user', "content": 'Проанализируй весь диалог и подведи итоги в формате: {user_id, имя, номер телефона, итоги диалога}, обязательно подчеркни все ключевые моменты диалога в итогах, не добавляй ничего лишнего, ничего больше, только json в заданном формате'})
     print(dialogue_entries)
     return dialogue_entries
 
