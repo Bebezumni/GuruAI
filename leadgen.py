@@ -280,27 +280,7 @@ class AmoCRMWrapper:
             print(access_token)
             print(refresh_token)
             _save_tokens(access_token, refresh_token)
-    def _base_request(self, **kwargs):
-        access_token = "Bearer " + _get_access_token()
-        headers = {"Authorization": access_token}
-        req_type = kwargs.get("type")
-        response = ""
-        if req_type == "get":
-            try:
-                response = requests.get("https://{}.amocrm.ru{}".format(
-                    subdomain, kwargs.get("endpoint")), headers=headers).json()
-            except JSONDecodeError as e:
-                logging.exception(e)
-        elif req_type == "get_param":
-            url = "https://{}.amocrm.ru{}?{}".format(
-                subdomain,
-                kwargs.get("endpoint"), kwargs.get("parameters"))
-            response = requests.get(str(url), headers=headers).json()
-        elif req_type == "post":
-            response = requests.post("https://{}.amocrm.ru{}".format(
-                subdomain,
-                kwargs.get("endpoint")), headers=headers, json=kwargs.get("data")).json()
-        return response
+
 
 def debug_token_info(token):
     try:
@@ -320,12 +300,12 @@ amocrm_wrapper_1 = AmoCRMWrapper()
 amocrm_wrapper_1.init_oauth2()
 
 
-
-while True:
-    time.sleep(43200)
-    access_token = os.getenv("AMOCRM_ACCESS_TOKEN")
-    if is_minute_passed(access_token, issuance_window_minutes=10080):
-        _get_new_tokens()
-        print('Token updated')
-    else:
-        print('Token is still valid')
+if __name__ == '__main_':
+    while True:
+        time.sleep(43200)
+        access_token = os.getenv("AMOCRM_ACCESS_TOKEN")
+        if is_minute_passed(access_token, issuance_window_minutes=10080):
+            _get_new_tokens()
+            print('Token updated')
+        else:
+            print('Token is still valid')

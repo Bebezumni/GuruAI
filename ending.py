@@ -67,12 +67,20 @@ def parse_response(response, crm):
             print(f"Phone Number: {phone_number}")
             print(f'Summary {dialogue_summary}')
             b24url = f"https://guruai.bitrix24.ru/rest/1/0u5kbm63tiosg3hd/crm.lead.add.json?FIELDS[TITLE]={dialogue_summary}&FIELDS[NAME]={name}&FIELDS[LAST_NAME]={name}&FIELDS[PHONE][0][VALUE]={phone_number}&FIELDS[PHONE][0][VALUE_TYPE]=WORK"
-
             req = requests.post(url=b24url)
             print('BITRIX REQ SENT')
             # If you want to save the information to variables, you can return them
             return user_id, name, phone_number, dialogue_summary
         else:
+            user_id = values[0].strip().split(':')[1].strip()
+            name = values[1].strip().split(':')[1].strip()
+            phone_number = values[2].strip().split(':')[1].strip()
+            dialogue_summary = values[3].strip().split(':')[1].strip()
+            # You can print or return the extracted information
+            print(f"User ID: {user_id}")
+            print(f"Name: {name}")
+            print(f"Phone Number: {phone_number}")
+            print(f'Summary {dialogue_summary}')
             send_amo_lead(name, dialogue_summary, phone_number)
 def send_amo_lead(user_name, dialogue_results, phone):
     url = "https://aamcorporation.amocrm.ru/api/v4/leads/unsorted/forms"

@@ -4,18 +4,25 @@ import threading
 import time
 import signal
 
+
 def start_chatbot():
     try:
         print("Starting Chatbot...")
         subprocess.run(["python", "main.py"])
     except KeyboardInterrupt:
         print("Chatbot thread interrupted")
+def start_amo_leadgen():
+    try:
+        print("Starting token generation cycle for amo...")
+        subprocess.run(["python", "leadgen.py"])
+    except KeyboardInterrupt:
+        print("leadgen thread interrupted")
 
 def start_django_server():
     try:
         print("Starting Django Server...")
         subprocess.run([
-  	  "python",
+  	   "python",
  	   "manage.py",
  	   "runsslserver",
  	   '5.35.90.130:8000',
@@ -36,10 +43,10 @@ def start_django_server_nossl():
         print("Django server thread interrupted")
 def start_webhook_server():
     try:
-        print("Starting Webhooks Server...")
-        subprocess.run(["python", "app.py"])
+        print("Starting chatapp Server...")
+        subprocess.run(["python", "chatapp.py"])
     except KeyboardInterrupt:
-        print("Webhooks server thread interrupted")
+        print("chatapp server thread interrupted")
 
 def start_vk_app():
     try:
@@ -61,20 +68,25 @@ if __name__ == "__main__":
     django_thread = threading.Thread(target=start_django_server)
     webhook_thread = threading.Thread(target=start_webhook_server)
     vk_thread = threading.Thread(target=start_vk_app)
+    lead_thread = threading.Thread(target=start_amo_leadgen())
 
     try:
         django_thread.start()
         time.sleep(2)
         chatbot_thread.start()
         time.sleep(2)
-        # webhook_thread.start()
+        webhook_thread.start()
+        time.sleep(2)
+
+        lead_thread.start()
         # time.sleep(2)
         # vk_thread.start()
 
         # Wait for both threads to finish
         chatbot_thread.join()
         django_thread.join()
-        # webhook_thread.join()
+        lead_thread.join()
+        webhook_thread.join()
         # vk_thread.join()
 
     except KeyboardInterrupt:
