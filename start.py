@@ -25,9 +25,9 @@ def start_django_server():
   	   "python",
  	   "manage.py",
  	   "runsslserver",
- 	   '5.35.90.130:8000',
- 	   '--cert', '/etc/letsencrypt/live/chatai.adda-group.com/fullchain.pem',
- 	   '--key', '/etc/letsencrypt/live/chatai.adda-group.com/privkey.pem'
+ 	   '5.35.91.135:8000',
+ 	   '--cert', '/etc/letsencrypt/live/platform.guruai.space/fullchain.pem',
+ 	   '--key', '/etc/letsencrypt/live/platform.guruai.space/privkey.pem'
 	])  
     except KeyboardInterrupt:
         print("Django server thread interrupted")
@@ -38,6 +38,7 @@ def start_django_server_nossl():
   	  "python",
  	   "manage.py",
  	   "runserver",
+ 	   "5.35.91.135:8000",
 	])
     except KeyboardInterrupt:
         print("Django server thread interrupted")
@@ -77,12 +78,12 @@ if __name__ == "__main__":
         time.sleep(2)
         webhook_thread.start()
         time.sleep(2)
-        lead_thread.start()
+        # lead_thread.start()
         # time.sleep(2)
         # vk_thread.start()
         chatbot_thread.join()
         django_thread.join()
-        lead_thread.join()
+        # lead_thread.join()
         webhook_thread.join()
         # vk_thread.join()
 

@@ -17,7 +17,9 @@ from itertools import chain
 from django.http import JsonResponse
 from asgiref.sync import async_to_sync
 from random import randint
-
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 @login_required(login_url='/login/')
 def chat_view(request):
@@ -36,18 +38,29 @@ def chat_view(request):
 def company_view(request):
     company = Company.objects.first()
     return render(request, 'home/company.html', {'company': company})
+    
 
-@login_required(login_url='/login/')
+def token_view(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrf_token': csrf_token})
+
+
 def site_chat(request):
+    if request.method == 'GET':
+        # Logic for handling GET request, possibly returning the CSRF token
+        csrf_token = get_token(request)
+        return JsonResponse({'csrf_token': csrf_token})
     if request.method == 'POST':
         print(request)
-        user_id = randint(1000, 1000000)
-        user_name = request.POST.get('user_name')
-        user_message = request.POST.get('user_message')
+        data = json.loads(request.body.decode('utf-8'))
+        csrf_token = request.headers.get('X-CSRFToken', '')
+        print(csrf_token)
+        user_id = data.get('userId', '')
+        user_name = data.get('userName', '')
+        user_message = data.get('message', '')
         print(f'user message:  {user_message}')
         print(f"user id from site {user_id}, msg: {user_message}, name: {user_name}")
         # Simulate a response from the server
-        make_openai_request(user_message, user_id, f"{user_name}(site)",)
         response_message = make_openai_request(user_message, user_id, user_name)
         # Return a JsonResponse with the response
         return JsonResponse({'status': 'success', 'response_message': response_message})

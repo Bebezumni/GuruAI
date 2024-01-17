@@ -1,6 +1,6 @@
 from django.urls import path, re_path
 from apps.home import views
-from .views import chat_view, create_message_from_site, company_view, site_chat_view, site_chat
+from .views import chat_view, create_message_from_site, company_view, site_chat_view, site_chat, token_view
 urlpatterns = [
 
     # The home page
@@ -10,6 +10,7 @@ urlpatterns = [
     path('create_message_from_site/', create_message_from_site, name='create_message_from_site'),
     path('site_chat/', site_chat, name='site_chat'),
     path('site_chat_view', site_chat_view, name='site_chat_view'),
+    path('token_view/', token_view, name='token_view'),
     re_path(r'^.*\.*', views.pages, name='pages'),
 
 

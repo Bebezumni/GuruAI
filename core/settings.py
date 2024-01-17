@@ -19,9 +19,9 @@ ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # load production server from .env
-ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='5.35.90.130'), '5.35.90.130', '0.0.0.0', 'chatai.adda-group.com']
-CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER', default='127.0.0.1')]
-
+ALLOWED_HOSTS = ['localhost', 'localhost:85', '127.0.0.1', os.getenv('SERVER', default='5.35.90.130'), '5.35.91.135', '0.0.0.0', 'chatai.adda-group.com', 'platform.guruai.space', ]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + os.getenv('SERVER', default='127.0.0.1'), 'https://guruai.space']
+CSRF_USE_SESSIONS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -33,19 +33,34 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.home',
     'sslserver',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'https://guruai.space',
+    # Add other allowed origins if needed
+]
+
+CSRF_TRUSTED_ORIGINS = ['https://guruai.space', 'guruai.space']
+
+CSRF_USE_REFERRER = False
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+# CSRF_COOKIE_SECURE = True  # If your site uses HTTPS
+CSRF_COOKIE_SAMESITE = 'None'
 ROOT_URLCONF = 'core.urls'
 LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
