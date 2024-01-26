@@ -20,6 +20,12 @@ from random import randint
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import csrf_exempt
 import json
+import requests
+from utils import ca_atoken
+
+
+access_token=ca_atoken
+
 
 @login_required(login_url='/login/')
 def chat_view(request):
@@ -39,6 +45,33 @@ def company_view(request):
     company = Company.objects.first()
     return render(request, 'home/company.html', {'company': company})
     
+@csrf_exempt
+def template_send(request, phone, name):
+    url = f'https://api.chatapp.online/v1/licenses/43435/messengers/caWhatsApp/chats/{phone}/messages/template'
+    print(access_token)
+    payload = {
+        "template": {
+            "id": "680246037632141",
+            "params": [
+                f"{name}"
+            ]
+        },
+        "file": "https:\/\/download.samplelib.com\/jpeg\/sample-green-400x300.jpg",
+        "fileName": "sample-green-400x300.jpg",
+        "tracking": "velit",
+        "companyId": 14
+    }
+    headers = {
+        'Authorization': access_token,
+        'Content-Type': 'application/json'
+    }
+
+    response = requests.request('POST', url, headers=headers, json=payload)
+    print(response.json())
+    return HttpResponse(f'Site chat with id {phone}')
+
+
+
 
 def token_view(request):
     csrf_token = get_token(request)
@@ -71,7 +104,7 @@ def site_chat_view(request):
     return render(request, 'home/chat_tilda.html')
 
 
-@login_required(login_url='/login/')
+@csrf_exempt
 def create_message_from_site(request):
 
     text_message = request.POST.get('text_message')
@@ -114,6 +147,9 @@ def index(request):
     html_template = loader.get_template('home/index.html')
     return HttpResponse(html_template.render(context, request))
 
+def chatapp_webhook(request):
+    
+    return 200
 
 @login_required(login_url="/login/")
 def pages(request):

@@ -69,7 +69,7 @@ if __name__ == "__main__":
     django_thread = threading.Thread(target=start_django_server)
     webhook_thread = threading.Thread(target=start_webhook_server)
     vk_thread = threading.Thread(target=start_vk_app)
-    lead_thread = threading.Thread(target=start_amo_leadgen())
+    # lead_thread = threading.Thread(target=start_amo_leadgen())
 
     try:
         django_thread.start()

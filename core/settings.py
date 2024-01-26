@@ -53,9 +53,7 @@ CORS_ALLOWED_ORIGINS = [
     'https://guruai.space',
     # Add other allowed origins if needed
 ]
-
 CSRF_TRUSTED_ORIGINS = ['https://guruai.space', 'guruai.space']
-
 CSRF_USE_REFERRER = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True

@@ -13,7 +13,9 @@ VERIFY_TOKEN='GURUTOKEN'
 WHATSAPP_TOKEN='EAANfmCTCQNsBO6NYe1ZBiZB6QVMsZAGAKn4x7lmgCRyZCzJx2b6CtbWqcfIlKgO0ZADCd06H8tBr2deHfzW2AJoqVtHBpoiiCyWwZAIimT492p433JodW7ePfPlHekc1dZCgZA9paZCXGmwPC4XUoZAWbXPZCPVOZClHk99ZC81SjQn0pY9cOaC6KuwQCCRcjZCz2TgfnZCvugOpbKFWPJnRcAeTGTZBOs86FsvyHfCE4xE5utr7regh'
 openai.api_key = openai_api_key
 wh_model = whisper.load_model("base")
-crm = 'amo'
+crm = 'bitrix'
+ca_atoken= '59384cd3436c99ed2d7aa0d65b1fb66e0a08804c288d31f3b90f69277ee2e001'
+ca_rtoken= '7811118d576b79caa7dbfae165d871e568c42463f5785342e0d7fa8efadb38fa'
 def chatbot(question):
         """
         Отвечает на вопрос с использованием ранее обученного индекса.
