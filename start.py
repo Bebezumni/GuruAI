@@ -18,6 +18,15 @@ def start_amo_leadgen():
     except KeyboardInterrupt:
         print("leadgen thread interrupted")
 
+def start_ca_token():
+    try:
+        print("Starting token generation cycle for chatapp...")
+        subprocess.run(["python", "ca_token.py"])
+    except KeyboardInterrupt:
+        print("chatapp token thread interrupted")
+    
+
+
 def start_django_server():
     try:
         print("Starting Django Server...")
@@ -63,7 +72,7 @@ def signal_handler(sig, frame):
 if __name__ == "__main__":
     # Register the signal handler for Ctrl+C
     signal.signal(signal.SIGINT, signal_handler)
-
+    ca_token_thread = threading.Thread(target=start_ca_token)
     # Start the chatbot and Django server in separate threads
     chatbot_thread = threading.Thread(target=start_chatbot)
     django_thread = threading.Thread(target=start_django_server)
@@ -78,13 +87,15 @@ if __name__ == "__main__":
         time.sleep(2)
         webhook_thread.start()
         time.sleep(2)
+        ca_token_thread.start()
         # lead_thread.start()
-        # time.sleep(2)
+        time.sleep(2)
         # vk_thread.start()
         chatbot_thread.join()
         django_thread.join()
         # lead_thread.join()
         webhook_thread.join()
+        ca_token_thread.join()
         # vk_thread.join()
 
     except KeyboardInterrupt:
