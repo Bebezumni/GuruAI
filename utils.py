@@ -6,7 +6,7 @@ import os
 import platform
 # import time
 from llama_index import StorageContext, load_index_from_storage
-Token = "6242278369:AAGhmA5UbCaryFCKdTi-tqM58Lw6pVZQDYU"
+Token = "6870166258:AAELKQ0QNJIS1_IdI3Ixus5QKVFXNfpHaAA"
 openai_api_key = "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"
 WHATSAPP_BUSINESS_ACCOUNT_ID = "168724609661438"
 VERIFY_TOKEN='GURUTOKEN'
@@ -152,8 +152,6 @@ def check_photo_code(GPTbot, chat_id, assistant_response, promt):
         print('Photo code detected')
         assistant_response = assistant_response.replace('<PHOTO_CODE>', '')
         GPTbot.send_photo(chat_id, open(image1, 'rb'))
-        GPTbot.send_photo(chat_id, open(image2, 'rb'))
-        GPTbot.send_photo(chat_id, open(image3, 'rb'))
     return assistant_response
     
 def check_bali_code(GPTbot, chat_id, assistant_response, promt):

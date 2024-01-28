@@ -151,7 +151,7 @@ def start_command_handler(message: callable) -> None:
     with open(history_file_path, 'w+') as file:
         file.truncate(0)
     GPTbot.send_chat_action(chat_id=message.chat.id, action="typing")
-    user_prompt = 'Привет'
+    user_prompt = 'Здравствуй'
     sales_agent = sales_agent_manager.get_sales_agent(user_id)
     sales_agent.human_step(user_prompt)
     sales_agent.determine_conversation_stage()

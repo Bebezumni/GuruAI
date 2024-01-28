@@ -5,7 +5,6 @@ from langchain.llms import OpenAI
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 
-
 def setup_knowledge_base(product_catalog: str = None):
     """
     We assume that the product catalog is simply a text string.
@@ -48,8 +47,6 @@ def setup_schedule_knowledge_base(schedule_file: str = None):
     return schedule
 
 
-
-
 def get_tools(knowledge_base):
     # we only use one tool for now, but this is highly extensible!
     tools = [
@@ -62,7 +59,7 @@ def get_tools(knowledge_base):
         #     name="ScheduleSearch",
         #     func=schedule.run,
         #     description="useful for when you need to set an appointment or search for available time slots in the schedule",
-        # )
+        # ),
     ]
     return tools
 
