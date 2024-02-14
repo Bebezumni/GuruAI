@@ -6,16 +6,16 @@ import os
 import platform
 # import time
 from llama_index import StorageContext, load_index_from_storage
-Token = "6242278369:AAGhmA5UbCaryFCKdTi-tqM58Lw6pVZQDYU"
-openai_api_key = "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"
-WHATSAPP_BUSINESS_ACCOUNT_ID = "168724609661438"
+Token =
+openai_api_key = 
+WHATSAPP_BUSINESS_ACCOUNT_ID = 
 VERIFY_TOKEN='GURUTOKEN'
-WHATSAPP_TOKEN='EAANfmCTCQNsBO6NYe1ZBiZB6QVMsZAGAKn4x7lmgCRyZCzJx2b6CtbWqcfIlKgO0ZADCd06H8tBr2deHfzW2AJoqVtHBpoiiCyWwZAIimT492p433JodW7ePfPlHekc1dZCgZA9paZCXGmwPC4XUoZAWbXPZCPVOZClHk99ZC81SjQn0pY9cOaC6KuwQCCRcjZCz2TgfnZCvugOpbKFWPJnRcAeTGTZBOs86FsvyHfCE4xE5utr7regh'
+WHATSAPP_TOKEN=
 openai.api_key = openai_api_key
 wh_model = whisper.load_model("base")
-crm = 'bitrix'
-ca_atoken= '59384cd3436c99ed2d7aa0d65b1fb66e0a08804c288d31f3b90f69277ee2e001'
-ca_rtoken= '7811118d576b79caa7dbfae165d871e568c42463f5785342e0d7fa8efadb38fa'
+crm = 
+ca_atoken=
+ca_rtoken=
 def chatbot(question):
         """
         Отвечает на вопрос с использованием ранее обученного индекса.
