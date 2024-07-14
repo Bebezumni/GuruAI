@@ -1,1 +1,1 @@
-GuruAI team main production repository
+CRM + All Messengers + LLM + Multi Lang Chain + WebUI on Django + Bootstrap
